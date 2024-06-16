@@ -1,4 +1,4 @@
-import { LoginFormData, RegisterFormData, UserType } from "@/types";
+import { categoryType, LoginFormData, ProductType, RegisterFormData, UserType } from "@/types";
 import axios from "axios";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -76,3 +76,73 @@ export const me = async (): Promise<UserType> => {
     return response.json()
 }
 
+
+export const signOut = async () => {
+    const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+        credentials: 'include',
+        method: 'POST'
+    })
+    if (!response.ok) {
+        throw new Error('An error occurred during logout')
+    }
+}
+
+export const getAllCategories = async (): Promise<categoryType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/category/categories`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (!response.ok) {
+        throw new Error('An error occurred fetching categories')
+    }
+    return response.json()
+}
+
+export const createCategory = async (category: { categoryName: string }): Promise<categoryType> => {
+    const response = await fetch(`${API_BASE_URL}/api/category/create-category`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    })
+    if (!response.ok) {
+        throw new Error('An error occurred creating category')
+    }
+    return response.json()
+}
+
+
+export const getAllProducts = async (): Promise<ProductType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/product/all`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('An error occurred fetching products');
+    }
+
+    const data = await response.json();
+    return data;
+};
+
+
+export const createProduct = async (productFormData: FormData) => {
+    const response = await fetch(`${API_BASE_URL}/api/product/create`, {
+        method: "POST",
+        credentials: "include",
+        body: productFormData
+    })
+    if (!response.ok) {
+        throw new Error('An error occurred creating product')
+    }
+    return response.json()
+}

@@ -23,3 +23,32 @@ export type UserType = {
 
 
 }
+export type categoryType = {
+    _id: string;
+    categoryName: string;
+
+}
+export type CreateProductFormData = {
+
+    name: string;
+    description: string;
+    price: number;
+    countInStock: number;
+    imageFiles: FileList[];
+    imagesUrls: string[];
+    category: string;
+    lastUpdated: Date;
+}
+
+
+export type ProductType = {
+    _id: string;
+    name: string;
+    description: string;
+    price: number;
+    countInStock: number;
+    imagesUrls: string[];
+    category: string;
+    lastUpdated: Date;
+    userId: string;
+}

@@ -29,7 +29,7 @@ const Toast = ({ message, type, onClose }: ToastProps) => {
     };
   }, [message, type, onClose]);
 
-  return <Toaster />;
+  return <Toaster position="bottom-right" />;
 };
 
 export default Toast;

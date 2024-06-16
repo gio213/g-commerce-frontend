@@ -4,6 +4,7 @@ import * as apiClient from "../api/api-client.ts";
 import { useAppContext } from "@/context/AppContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { LoginFormData } from "@/types/index.ts";
+import { Button } from "@/components/ui/button.tsx";
 
 const Login = () => {
   const { showToast } = useAppContext();
@@ -32,57 +33,75 @@ const Login = () => {
   });
 
   return (
-    <form className="flex flex-col gap-5 p-6 md:p-0" onSubmit={onSubmit}>
-      <h2 className="text-3xl font-bold">Sign In</h2>
-      <label className="flex-1 text-sm font-bold text-gray-700">
-        Email
-        <input
-          type="email"
-          className="w-full px-2 py-1 font-normal border rounded"
-          {...register("email", { required: "This field is required" })}
-        ></input>
-        {errors.email && (
-          <span className="text-red-500">{errors.email.message}</span>
-        )}
-      </label>
-      <div />
-      <label className="flex-1 text-sm font-bold text-gray-700">
-        Password
-        <input
-          type="password"
-          className="w-full px-2 py-1 font-normal border rounded"
-          {...register("password", {
-            required: "This field is required",
-            minLength: {
-              value: 6,
-              message: "Password must be at least 6 characters",
-            },
-          })}
-        ></input>
-        {errors.password && (
-          <span className="text-red-500">{errors.password.message}</span>
-        )}
-      </label>
-      <span className="flex items-center justify-between">
-        <span className="flex gap-1 text-sm">
-          Not Registered?
-          <Link className="text-blue-500 underline" to="/register">
-            Create an account here
-          </Link>
-        </span>
-
-        <button
-          type="submit"
-          className="p-2 text-xl font-bold text-white bg-blue-600 hover:bg-blue-500"
-        >
-          Login
-        </button>
-      </span>
-      <span>
-        <Link className="text-blue-500 underline" to="/password-reset">
-          Forgot Password?
-        </Link>
-      </span>
+    <form className="min-h-screen hero bg-base-200" onSubmit={onSubmit}>
+      <div className="flex-col hero-content lg:flex-row-reverse">
+        <div className="text-center lg:text-left">
+          <h1 className="text-5xl font-bold">Login now!</h1>
+          <p className="py-6">
+            Get access to all your orders, wishlist and much more by logging in
+            to your account.
+          </p>
+        </div>
+        <div className="w-full max-w-sm shadow-2xl card shrink-0 bg-base-100">
+          <div className="card-body">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                placeholder="email"
+                className="input input-bordered"
+                {...register("email", { required: "This field is required" })}
+                {...(errors.email && {
+                  className: "input input-bordered input-error",
+                })}
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Password</span>
+              </label>
+              <input
+                type="password"
+                placeholder="password"
+                className="input input-bordered"
+                {...register("password", {
+                  required: "This field is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                })}
+                {...(errors.password && {
+                  className: "input input-bordered input-error",
+                })}
+              />
+              <label className="label">
+                <a href="#" className="label-text-alt link link-hover">
+                  Forgot password?
+                </a>
+              </label>
+            </div>
+            <div className="mt-6 form-control">
+              <Button type="submit" className="btn btn-primary">
+                Login
+              </Button>
+            </div>
+            <span>
+              <Link className="text-blue-500 underline" to="/password-reset">
+                Forgot Password?
+              </Link>
+            </span>
+            <span className="flex gap-1 text-sm">
+              Not Registered?
+              <Link className="text-blue-500 underline" to="/register">
+                Create an account here
+              </Link>
+            </span>
+          </div>
+        </div>
+      </div>
     </form>
   );
 };

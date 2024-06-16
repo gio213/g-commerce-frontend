@@ -7,8 +7,8 @@ import {
 } from "./ui/dropdown-menu";
 import { Link } from "react-router-dom";
 import { Separator } from "./ui/separator";
-import { Button } from "./ui/button";
 import { useAppContext } from "@/context/AppContext";
+import LogoutButton from "./LogoutButton";
 
 const UserNameMenu = () => {
   const { user } = useAppContext();
@@ -42,12 +42,7 @@ const UserNameMenu = () => {
         </DropdownMenuItem>
         <Separator />
         <DropdownMenuItem>
-          <Button
-            // onClick={() => logout()}
-            className="flex flex-1 font-bold bg-orange-500"
-          >
-            Log Out
-          </Button>
+          <LogoutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
