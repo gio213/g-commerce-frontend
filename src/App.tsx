@@ -13,6 +13,7 @@ import { useAppContext } from "./context/AppContext";
 import AdminLayout from "./components/admin/layout/AdminLayout";
 import AddProduct from "./pages/admin/AddProduct";
 import AdminProducts from "./pages/admin/AdminProducts";
+import ProductDetailPage from "./pages/ProductDetailPage";
 function App() {
   const { isLoggedin, user } = useAppContext();
   return (
@@ -103,31 +104,31 @@ function App() {
                 <MyHotels />
               </Layout>
             }
-          />
-          <Route
+          /> */}
+            {/* <Route
             path="/my-bookings"
             element={
               <Layout>
                 <MyBookings />
               </Layout>
             }
-          />
-          <Route
+          /> */}
+            {/* <Route
             path="/edit-hotel/:hotelId"
             element={
               <Layout>
                 <EditHotel />
               </Layout>
             }
-          />
-          <Route
-            path="/hotel/:hotelId/booking"
-            element={
-              <Layout>
-                <Booking />
-              </Layout>
-            }
           /> */}
+            <Route
+              path="/product/detail/:productId"
+              element={
+                <Layout>
+                  <ProductDetailPage />
+                </Layout>
+              }
+            />
           </>
         )}
 

@@ -135,6 +135,54 @@ export const getAllProducts = async (): Promise<ProductType[]> => {
 };
 
 
+export const getProductById = async (productId: string): Promise<ProductType> => {
+    const response = await fetch(`${API_BASE_URL}/api/product/detail/${productId}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    )
+    if (!response.ok) {
+        throw new Error('An error occurred fetching product')
+    }
+    return response.json()
+}
+
+
+export const updateProduct = async (productId: string, productData: ProductType) => {
+    const response = await fetch(`${API_BASE_URL}/api/product/update/${productId}`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',  // Ensure the server knows to parse JSON
+        },
+        credentials: "include",
+        body: JSON.stringify(productData),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();  // Retrieve error message from the response
+        console.error('Error updating product:', errorText);  // Log the server error for debugging
+        throw new Error(`An error occurred updating product: ${errorText}`);
+    }
+
+    return response.json();
+}
+
+
+export const deleteProduct = async (productId: string) => {
+    const response = await fetch(`${API_BASE_URL}/api/product/delete/${productId}`, {
+        method: "DELETE",
+        credentials: "include"
+    })
+    if (!response.ok) {
+        throw new Error('An error occurred deleting product')
+    }
+    return response.json()
+}
+
+
 export const createProduct = async (productFormData: FormData) => {
     const response = await fetch(`${API_BASE_URL}/api/product/create`, {
         method: "POST",

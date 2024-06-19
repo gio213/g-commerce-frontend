@@ -30,7 +30,10 @@ const AdminProducts = () => {
       <span className="justify-end w-full font-bold">
         Total Products: {data.length}
       </span>
-      <AdminProductCard product={data} />
+
+      {data.map((product) => (
+        <AdminProductCard key={product._id} product={product} />
+      ))}
     </div>
   );
 };
