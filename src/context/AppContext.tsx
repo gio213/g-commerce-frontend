@@ -13,6 +13,7 @@ type AppContextType = {
   showToast: (toastMessage: ToastMessage) => void;
   isLoggedin: boolean;
   user: UserType | undefined;
+  cartItemsCount: number;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -29,6 +30,10 @@ export const AppContextProvider = ({
   const user = useQuery("me", apiClient.me, {
     enabled: !isError,
   });
+  const cartItems = useQuery("cartItems", apiClient.getCartItems, {
+    enabled: !isError,
+  });
+
   return (
     <AppContext.Provider
       value={{
@@ -37,6 +42,7 @@ export const AppContextProvider = ({
         },
         isLoggedin: !isError,
         user: user.data,
+        cartItemsCount: cartItems.data?.length || 0,
       }}
     >
       {toast && (

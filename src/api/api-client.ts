@@ -210,3 +210,55 @@ export const createProduct = async (productFormData: FormData) => {
     }
     return response.json()
 }
+
+
+export const addToCart = async ({ productId, userId }: { productId: string, userId: string }) => {
+    const response = await fetch(`${API_BASE_URL}/api/cart/add`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId, userId })
+    });
+
+    if (!response.ok) {
+        throw new Error('An error occurred adding to wishlist');
+    }
+
+    return response.json();
+};
+
+export const addToWishlist = async ({ productId, userId }: { productId: string, userId: string }) => {
+    const response = await fetch(`${API_BASE_URL}/api/wishlist/add`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId, userId })
+    });
+
+    if (!response.ok) {
+        throw new Error('An error occurred adding to wishlist');
+    }
+
+    return response.json();
+};
+
+export const getCartItems = async (): Promise<ProductType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/cart/cart-items`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred getting cart');
+    }
+    return response.json();
+}
+
+

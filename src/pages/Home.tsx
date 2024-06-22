@@ -15,17 +15,16 @@ const Home = () => {
   console.log(data);
 
   if (isLoading) {
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
+    return <Loading />;
   }
-  console.log("data rpoducts", data?.products);
 
   return (
     <main className="container flex-1 py-10 mx-auto">
-      <Hero products={data!.products} />
+      <Hero
+        title="Most Popular Products
+      "
+        products={data!.products}
+      />
     </main>
   );
 };

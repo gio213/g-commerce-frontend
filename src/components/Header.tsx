@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logoImg from "../assets/logo.png";
 
 const Header = () => {
-  const { user } = useAppContext();
+  const { user, isLoggedin } = useAppContext();
   const navigate = useNavigate();
   return (
     <header className="shadow-2xl bg-white-800">
@@ -26,7 +26,7 @@ const Header = () => {
 
         <NavLinks />
         <input placeholder="Search" className="input input-bordered" />
-        {user?.role === "admin" && (
+        {isLoggedin && user?.role === "admin" && (
           <Button
             onClick={() => {
               navigate("/admin-dashboard");

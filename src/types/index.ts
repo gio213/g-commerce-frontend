@@ -45,8 +45,20 @@ export type CreateProductFormData = {
     lastUpdated: Date;
 }
 
+export type ProductId = {
+    _id: string;
+    productId: string;
+    userId: string;
+    name: string;
+    imagesUrls: string[];
+    price: number;
+}
+
 
 export type ProductType = {
+    count: number;
+    totalPrice: number;
+    productId: ProductId
     _id: string;
     name: string;
     description: string;

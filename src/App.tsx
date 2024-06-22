@@ -69,6 +69,14 @@ function App() {
             </Layout>
           }
         />
+        <Route
+          path="/product/detail/:productId"
+          element={
+            <Layout>
+              <ProductDetailPage />
+            </Layout>
+          }
+        />
         {isLoggedin && user?.role === "admin" && (
           <>
             <Route
@@ -123,14 +131,6 @@ function App() {
               </Layout>
             }
           /> */}
-            <Route
-              path="/product/detail/:productId"
-              element={
-                <Layout>
-                  <ProductDetailPage />
-                </Layout>
-              }
-            />
           </>
         )}
 
