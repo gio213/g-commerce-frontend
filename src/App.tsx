@@ -14,6 +14,8 @@ import AdminLayout from "./components/admin/layout/AdminLayout";
 import AddProduct from "./pages/admin/AddProduct";
 import AdminProducts from "./pages/admin/AdminProducts";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import ShoppingCard from "./pages/ShoppingCard";
+import PersonPage from "./pages/PersonPage";
 function App() {
   const { isLoggedin, user } = useAppContext();
   return (
@@ -97,22 +99,22 @@ function App() {
         )}
         {isLoggedin && (
           <>
-            {/* <Route
-            path="/my-hotels"
-            element={
-              <Layout>
-                <MyHotels />
-              </Layout>
-            }
-          /> */}
-            {/* <Route
-            path="/my-bookings"
-            element={
-              <Layout>
-                <MyBookings />
-              </Layout>
-            }
-          /> */}
+            <Route
+              path="/user-profile"
+              element={
+                <Layout>
+                  <PersonPage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/shopping-card"
+              element={
+                <Layout>
+                  <ShoppingCard />
+                </Layout>
+              }
+            />
             {/* <Route
             path="/edit-hotel/:hotelId"
             element={

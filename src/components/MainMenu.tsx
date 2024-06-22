@@ -7,14 +7,20 @@ import { useAppContext } from "@/context/AppContext";
 const MainMenu = () => {
   const { isLoggedin } = useAppContext();
   const navigate = useNavigate();
+
   return (
     <span className="items-center hidden space-x-2 md:flex">
       {isLoggedin ? (
         <>
           <div className="flex items-center justify-center">
-            <Link to="/card" className="font-bold hover:text-orange-500">
+            <Link
+              to="/shopping-card"
+              className="font-bold hover:text-orange-500"
+            >
               <span className="flex items-center gap-1 ">
-                <ShoppingBasket size={20} />
+                <>
+                  <ShoppingBasket size={20} />
+                </>
               </span>
             </Link>
             <UserNameMenu />

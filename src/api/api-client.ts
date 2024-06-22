@@ -1,4 +1,4 @@
-import { categoryType, LoginFormData, ProductType, RegisterFormData, UserType } from "@/types";
+import { categoryType, LoginFormData, ProductsResponse, ProductType, RegisterFormData, UpdateUser, UserType } from "@/types";
 import axios from "axios";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -37,12 +37,28 @@ export const signIn = async (formData: LoginFormData) => {
         body: JSON.stringify(formData)
     })
 
-    const body = await response.json()
 
-    if (!response) {
+    const body = await response.json()
+    if (!response.ok) {
         throw new Error(body.message)
     }
     return body
+}
+
+
+export const updateUser = async (userId: string, userData: UpdateUser) => {
+    const response = await fetch(`${API_BASE_URL}/api/users/update/${userId}`, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    })
+    if (!response.ok) {
+        throw new Error('An error occurred updating user')
+    }
+    return response.json()
 }
 
 
@@ -117,7 +133,7 @@ export const createCategory = async (category: { categoryName: string }): Promis
 }
 
 
-export const getAllProducts = async (): Promise<ProductType[]> => {
+export const getAllProducts = async (): Promise<ProductsResponse> => {
     const response = await fetch(`${API_BASE_URL}/api/product/all`, {
         method: 'GET',
         credentials: 'include',
@@ -135,7 +151,7 @@ export const getAllProducts = async (): Promise<ProductType[]> => {
 };
 
 
-export const getProductById = async (productId: string): Promise<ProductType> => {
+export const getProductById = async (productId: string): Promise<ProductsResponse> => {
     const response = await fetch(`${API_BASE_URL}/api/product/detail/${productId}`, {
         method: 'GET',
         credentials: 'include',

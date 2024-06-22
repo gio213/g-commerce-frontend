@@ -18,10 +18,15 @@ export type UserType = {
     firstName: string;
     lastName: string;
     role: string;
+}
 
-
-
-
+export type UpdateUser = {
+    _id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    role: string;
+    newPassword: string;
 }
 export type categoryType = {
     _id: string;
@@ -52,3 +57,15 @@ export type ProductType = {
     lastUpdated: Date;
     userId: string;
 }
+
+
+export type ProductsResponse = {
+    products: ProductType[];
+    productDetail: ProductType;
+    totalPages: number;
+    currentPage: number;
+    totalProducts: number;
+    simmilarProducts: ProductType[];
+}
+
+

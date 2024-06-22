@@ -1,23 +1,36 @@
-import { navItems } from "@/constants";
-import { Link } from "react-router-dom";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { navItems } from "../constants/index";
 const NavLinks = () => {
   return (
-    <>
-      {navItems.map((item, index) => (
-        <div
-          key={index}
-          className="hidden md:flex  justify-center items-center"
-        >
-          <Link
-            key={index}
-            to={item.path}
-            className="font-bold hover:text-orange-500"
-          >
-            {item.title}
-          </Link>
-        </div>
-      ))}
-    </>
+    <NavigationMenu>
+      <NavigationMenuList>
+        {navItems.map((item, index) => (
+          <NavigationMenuItem key={index}>
+            <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
+            {item.subPath && (
+              <NavigationMenuContent className="flex flex-col p-4 w-fit">
+                {item.subPath.map((subItem, index) => (
+                  <NavigationMenuLink
+                    key={index}
+                    href={subItem.path}
+                    className="w-full p-2 text-gray-800 hover:bg-gray-100 hover:text-gray-900"
+                  >
+                    <p className="truncate">{subItem.title}</p>
+                  </NavigationMenuLink>
+                ))}
+              </NavigationMenuContent>
+            )}
+          </NavigationMenuItem>
+        ))}
+      </NavigationMenuList>
+    </NavigationMenu>
   );
 };
 

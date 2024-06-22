@@ -33,7 +33,10 @@ const Login = () => {
   });
 
   return (
-    <form className="min-h-screen hero bg-base-200" onSubmit={onSubmit}>
+    <form
+      className="min-h-screen bg-opacity-50 rounded-lg hero bg-base-200"
+      onSubmit={onSubmit}
+    >
       <div className="flex-col hero-content lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>

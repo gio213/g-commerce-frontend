@@ -3,16 +3,25 @@ import MainMenu from "./MainMenu";
 import MobileNav from "./MobileNav";
 import NavLinks from "./NavLinks";
 import { Button } from "./ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import logoImg from "../assets/logo.png";
 
 const Header = () => {
   const { user } = useAppContext();
   const navigate = useNavigate();
   return (
     <header className="shadow-2xl bg-white-800">
-      <div className="container flex justify-between py-4 mx-auto">
+      <div className="container flex items-center justify-between mx-auto">
         <div>
-          <h1>Logo</h1>
+          <Link to="/">
+            <img
+              src={logoImg}
+              alt="logo "
+              width={100}
+              height={100}
+              className=""
+            />
+          </Link>
         </div>
 
         <NavLinks />

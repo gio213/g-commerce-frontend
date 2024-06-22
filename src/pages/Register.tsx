@@ -33,7 +33,7 @@ const Register = () => {
   });
 
   return (
-    <form className="min-h-screen hero bg-base-200" onSubmit={onSubmit}>
+    <form className="min-h-screen rounded-lg hero " onSubmit={onSubmit}>
       <div className="flex-col hero-content lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Sign up!</h1>
