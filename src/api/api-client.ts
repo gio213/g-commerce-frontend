@@ -246,6 +246,9 @@ export const addToWishlist = async ({ productId, userId }: { productId: string, 
     return response.json();
 };
 
+
+
+
 export const getCartItems = async (): Promise<ProductType[]> => {
     const response = await fetch(`${API_BASE_URL}/api/cart/cart-items`, {
         method: 'GET',
@@ -257,6 +260,21 @@ export const getCartItems = async (): Promise<ProductType[]> => {
     });
     if (!response.ok) {
         throw new Error('An error occurred getting cart');
+    }
+    return response.json();
+}
+
+export const getWishlistItems = async (): Promise<ProductType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/wishlist/wishlist-items`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred getting wishlist');
     }
     return response.json();
 }

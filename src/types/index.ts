@@ -52,7 +52,9 @@ export type ProductId = {
     name: string;
     imagesUrls: string[];
     price: number;
+    countInStock: number;
 }
+
 
 
 export type ProductType = {

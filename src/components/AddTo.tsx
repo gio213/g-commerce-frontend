@@ -2,14 +2,21 @@ import { useMutation } from "react-query";
 import * as apiClient from "../api/api-client";
 import { useAppContext } from "@/context/AppContext";
 import { useNavigate } from "react-router-dom";
-import { BookmarkPlusIcon, Heart } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 
 type AddToWhishListButtonProps = {
   productId: string;
   type: "cart" | "wishlist";
+  pageType?: "productDetail" | "cart";
+  className?: string;
 };
 
-const AddTo = ({ productId, type }: AddToWhishListButtonProps) => {
+const AddTo = ({
+  productId,
+  type,
+  pageType,
+  className,
+}: AddToWhishListButtonProps) => {
   const { user, showToast } = useAppContext();
   const userId = user?._id;
   const navigate = useNavigate();
@@ -55,14 +62,30 @@ const AddTo = ({ productId, type }: AddToWhishListButtonProps) => {
   return (
     <div>
       {type === "wishlist" ? (
-        <Heart
+        pageType === "productDetail" ? (
+          <button
+            onClick={handleClick}
+            className={`flex items-center px-4 py-2 text-white transition duration-300 bg-pink-500 rounded-lg hover:bg-pink-600 ${className}`}
+          >
+            <Heart className="mr-2" /> Wishlist
+          </button>
+        ) : (
+          <Heart
+            onClick={handleClick}
+            className="cursor-pointer hover:fill-red-500"
+          />
+        )
+      ) : pageType === "productDetail" ? (
+        <button
           onClick={handleClick}
-          className="cursor-pointer hover:fill-red-500"
-        />
+          className={`flex items-center px-4 py-2 text-white transition duration-300 bg-blue-500 rounded-lg hover:bg-blue-600${className}`}
+        >
+          <ShoppingCart className="mr-2" /> Add to Cart
+        </button>
       ) : (
-        <BookmarkPlusIcon
+        <ShoppingCart
           onClick={handleClick}
-          className="cursor-pointer hover:fill-green-500"
+          className="mr-2 cursor-pointer hover:fill-green-500"
         />
       )}
     </div>

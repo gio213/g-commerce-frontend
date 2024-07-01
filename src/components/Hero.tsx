@@ -11,7 +11,7 @@ const Hero = ({ products, title }: HeroProps) => {
   return (
     <div>
       <h1 className="text-2xl font-bold text-center">{title}</h1>
-      <div className="w-full p-4 space-x-4 carousel carousel-center rounded-box bg-customBlue">
+      <div className="flex w-full p-4 space-x-4 carousel carousel-center rounded-box">
         {products.map((product) => (
           <div className="relative carousel-item" key={product._id}>
             <Link to={`/product/detail/${product._id}`}>
@@ -23,7 +23,7 @@ const Hero = ({ products, title }: HeroProps) => {
                 height={200}
               />
               <div className="absolute flex p-1 bg-white rounded bottom-2 right-2">
-                ლ{product.price}
+                €{product.price}
               </div>
             </Link>
             <div className="absolute flex p-1 rounded bottom-2 left-2">

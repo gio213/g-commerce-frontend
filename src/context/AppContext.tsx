@@ -2,7 +2,7 @@ import React, { useState, createContext, useContext } from "react";
 import { useQuery } from "react-query";
 import * as apiClient from "../api/api-client.ts";
 import Toast from "@/components/Toast.tsx";
-import { UserType } from "@/types/index.ts";
+import { ProductType, UserType } from "@/types/index.ts";
 
 type ToastMessage = {
   message: string;
@@ -13,7 +13,8 @@ type AppContextType = {
   showToast: (toastMessage: ToastMessage) => void;
   isLoggedin: boolean;
   user: UserType | undefined;
-  cartItemsCount: number;
+  cartItems: ProductType[];
+  wishListItems: ProductType[];
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -34,6 +35,10 @@ export const AppContextProvider = ({
     enabled: !isError,
   });
 
+  const wishListItems = useQuery("wishListItems", apiClient.getWishlistItems, {
+    enabled: !isError,
+  });
+
   return (
     <AppContext.Provider
       value={{
@@ -42,7 +47,8 @@ export const AppContextProvider = ({
         },
         isLoggedin: !isError,
         user: user.data,
-        cartItemsCount: cartItems.data?.length || 0,
+        cartItems: cartItems.data || [],
+        wishListItems: wishListItems.data || [],
       }}
     >
       {toast && (

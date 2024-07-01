@@ -16,6 +16,7 @@ import AdminProducts from "./pages/admin/AdminProducts";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import ShoppingCard from "./pages/ShoppingCard";
 import PersonPage from "./pages/PersonPage";
+import WishListPage from "./pages/WishListPage";
 function App() {
   const { isLoggedin, user } = useAppContext();
   return (
@@ -123,14 +124,14 @@ function App() {
                 </Layout>
               }
             />
-            {/* <Route
-            path="/edit-hotel/:hotelId"
-            element={
-              <Layout>
-                <EditHotel />
-              </Layout>
-            }
-          /> */}
+            <Route
+              path="/wishlist"
+              element={
+                <Layout>
+                  <WishListPage />
+                </Layout>
+              }
+            />
           </>
         )}
 

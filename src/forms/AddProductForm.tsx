@@ -118,6 +118,7 @@ const AddProductForm = () => {
         <Input
           type="number"
           placeholder="Product price"
+          step={0.01}
           {...register("price", {
             required: "Price must be provided",
           })}

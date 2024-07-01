@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { useAppContext } from "@/context/AppContext";
 
 const MainMenu = () => {
-  const { isLoggedin, cartItemsCount } = useAppContext();
+  const { isLoggedin, cartItems, wishListItems } = useAppContext();
   const navigate = useNavigate();
 
   return (
@@ -17,19 +17,35 @@ const MainMenu = () => {
               to="/shopping-card"
               className="font-bold rounded-full hover:bg-customBlue"
             >
-              {cartItemsCount > 0 ? (
+              {cartItems.length > 0 ? (
                 <div className="relative">
-                  <ShoppingBasket size={25} className="hover:fill-green-500" />
+                  <ShoppingBasket size={35} className="hover:fill-green-500" />
                   <span className="absolute top-0 right-0 px-1 text-xs text-white bg-red-500 rounded-full">
-                    {cartItemsCount}
+                    <p className="text-[7px] font-bold text-white">
+                      {cartItems.length > 10 ? "10+" : cartItems.length}
+                    </p>
                   </span>
                 </div>
               ) : (
-                <ShoppingBasket size={25} className="hover:fill-green-500" />
+                <ShoppingBasket size={35} className="hover:fill-green-500" />
               )}
             </Link>
-            <Link to="/wishlist">
-              <HeartIcon size={25} className="hover:fill-red-500" />
+            <Link
+              to="/wishlist"
+              className="font-bold rounded-full hover:bg-customBlue"
+            >
+              {wishListItems.length > 0 ? (
+                <div className="relative">
+                  <HeartIcon size={35} className="hover:fill-red-500" />
+                  <span className="absolute top-0 right-0 px-1 text-xs text-white bg-red-500 rounded-full">
+                    <p className="text-[7px] font-bold text-white">
+                      {wishListItems.length > 10 ? "10+" : wishListItems.length}
+                    </p>
+                  </span>
+                </div>
+              ) : (
+                <HeartIcon size={35} className="hover:fill-green-500" />
+              )}
             </Link>
             <UserNameMenu />
           </div>
