@@ -2,7 +2,7 @@ import React, { useState, createContext, useContext } from "react";
 import { useQuery } from "react-query";
 import * as apiClient from "../api/api-client.ts";
 import Toast from "@/components/Toast.tsx";
-import { ProductType, UserType } from "@/types/index.ts";
+import { categoryType, ProductType, UserType } from "@/types/index.ts";
 
 type ToastMessage = {
   message: string;
@@ -15,6 +15,7 @@ type AppContextType = {
   user: UserType | undefined;
   cartItems: ProductType[];
   wishListItems: ProductType[];
+  categories: categoryType[];
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -39,6 +40,10 @@ export const AppContextProvider = ({
     enabled: !isError,
   });
 
+  const categories = useQuery("categories", apiClient.getAllCategories, {
+    enabled: !isError,
+  });
+
   return (
     <AppContext.Provider
       value={{
@@ -49,6 +54,7 @@ export const AppContextProvider = ({
         user: user.data,
         cartItems: cartItems.data || [],
         wishListItems: wishListItems.data || [],
+        categories: categories.data || [],
       }}
     >
       {toast && (

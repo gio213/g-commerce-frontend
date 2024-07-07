@@ -106,7 +106,6 @@ export const signOut = async () => {
 export const getAllCategories = async (): Promise<categoryType[]> => {
     const response = await fetch(`${API_BASE_URL}/api/category/categories`, {
         method: 'GET',
-        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         }
@@ -278,5 +277,8 @@ export const getWishlistItems = async (): Promise<ProductType[]> => {
     }
     return response.json();
 }
+
+
+
 
 

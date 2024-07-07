@@ -18,7 +18,7 @@ const Home = () => {
     return <Loading />;
   }
   if (!data) return <div>no data</div>;
-
+  console.log("data", data);
   return (
     <main className="container flex flex-col gap-5 py-10 mx-auto">
       <Hero

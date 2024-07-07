@@ -6,29 +6,27 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { navItems } from "../constants/index";
+import { useAppContext } from "@/context/AppContext";
 const NavLinks = () => {
+  const { categories } = useAppContext();
+  console.log("categories", categories);
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        {navItems.map((item, index) => (
-          <NavigationMenuItem key={index}>
-            <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
-            {item.subPath && (
-              <NavigationMenuContent className="flex flex-col p-4 w-fit">
-                {item.subPath.map((subItem, index) => (
-                  <NavigationMenuLink
-                    key={index}
-                    href={subItem.path}
-                    className="w-full p-2 text-gray-800 hover:bg-gray-100 hover:text-gray-900"
-                  >
-                    <p className="truncate">{subItem.title}</p>
-                  </NavigationMenuLink>
-                ))}
-              </NavigationMenuContent>
-            )}
-          </NavigationMenuItem>
-        ))}
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Search By Category</NavigationMenuTrigger>
+          <NavigationMenuContent className="w-full ">
+            {categories.map((category) => (
+              <NavigationMenuLink
+                key={category._id}
+                href={`/category/${category._id}`}
+                className="w-5 hover:bg-gray-200"
+              >
+                {category.categoryName}
+              </NavigationMenuLink>
+            ))}
+          </NavigationMenuContent>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );

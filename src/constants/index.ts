@@ -1,7 +1,8 @@
+
 export const navItems = [
 
     {
-        title: "Production", subPath: [
+        title: "Search By Category", subPath: [
             { title: "ეზოს სათამაშოები", path: "/" },
             { title: "სპორტული", path: "/" },
             { title: "აუზები და აქსესუარები ზღვისათვის", path: "/home3" },
