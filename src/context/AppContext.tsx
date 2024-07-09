@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import { useQuery } from "react-query";
 import * as apiClient from "../api/api-client.ts";
 import Toast from "@/components/Toast.tsx";
@@ -32,9 +32,21 @@ export const AppContextProvider = ({
   const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
   const [addedToCart, setAddedToCart] = useState(false);
   const [addedToWishlist, setAddedToWishlist] = useState(false);
-  const { isError } = useQuery("validateToken", apiClient.validateToken, {
-    retry: false,
-  });
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const validateToken = async () => {
+      try {
+        await apiClient.validateToken();
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+      }
+    };
+
+    validateToken();
+  }, []);
+
   const user = useQuery("me", apiClient.me, {
     enabled: !isError,
   });
