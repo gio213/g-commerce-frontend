@@ -5,6 +5,7 @@ import * as apiClient from "@/api/api-client";
 import Loading from "@/components/Loading";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import RemoveItem from "@/components/RemoveItem";
 
 type AggregatedProductType = ProductType & {
   count: number;
@@ -50,6 +51,8 @@ const ShoppingCard = () => {
       {} as { [key: string]: AggregatedProductType } // Cast the initial value to the correct type
     );
 
+  console.log("data", data);
+
   return (
     <div className="flex flex-col">
       <h1 className="mb-4 text-2xl font-semibold text-center">Shopping Cart</h1>
@@ -82,9 +85,11 @@ const ShoppingCard = () => {
               ${product.totalPrice.toFixed(2)}
             </span>
           </div>
-          <Button className="px-2 py-1 text-white bg-red-500 rounded-md">
-            Remove
-          </Button>
+          <RemoveItem
+            id={product._id}
+            removeType="cart "
+            className="px-2 py-1 text-white bg-red-500 rounded-md "
+          />
         </div>
       ))}
 

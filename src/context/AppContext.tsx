@@ -16,6 +16,10 @@ type AppContextType = {
   cartItems: ProductType[];
   wishListItems: ProductType[];
   categories: categoryType[];
+  addedToCart: boolean;
+  setAddedToCart: (value: boolean) => void;
+  addedToWishlist: boolean;
+  setAddedToWishlist: (value: boolean) => void;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -26,6 +30,8 @@ export const AppContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
+  const [addedToCart, setAddedToCart] = useState(false);
+  const [addedToWishlist, setAddedToWishlist] = useState(false);
   const { isError } = useQuery("validateToken", apiClient.validateToken, {
     retry: false,
   });
@@ -55,6 +61,10 @@ export const AppContextProvider = ({
         cartItems: cartItems.data || [],
         wishListItems: wishListItems.data || [],
         categories: categories.data || [],
+        addedToCart,
+        addedToWishlist,
+        setAddedToCart,
+        setAddedToWishlist,
       }}
     >
       {toast && (

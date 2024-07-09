@@ -17,16 +17,21 @@ const AddTo = ({
   pageType,
   className,
 }: AddToWhishListButtonProps) => {
-  const { user, showToast } = useAppContext();
+  const { user, showToast, setAddedToCart, setAddedToWishlist } =
+    useAppContext();
   const userId = user?._id;
   const navigate = useNavigate();
 
-  const { mutate: addToWishList } = useMutation(
+  const { mutate: addToWishList, isLoading: isAddingToWishList } = useMutation(
     "addToWishList",
     apiClient.addToWishlist,
     {
       onSuccess: () => {
         showToast({ message: "Added to wishlist", type: "success" });
+        setAddedToWishlist(true);
+        setTimeout(() => {
+          setAddedToWishlist(false);
+        }, 1000);
       },
       onError: () => {
         showToast({ message: "Failed to add to wishlist", type: "error" });
@@ -34,14 +39,22 @@ const AddTo = ({
     }
   );
 
-  const { mutate: addToCart } = useMutation("addToCart", apiClient.addToCart, {
-    onSuccess: () => {
-      showToast({ message: "Added to cart", type: "success" });
-    },
-    onError: () => {
-      showToast({ message: "Failed to add to cart", type: "error" });
-    },
-  });
+  const { mutate: addToCart, isLoading: isAddingToCart } = useMutation(
+    "addToCart",
+    apiClient.addToCart,
+    {
+      onSuccess: () => {
+        showToast({ message: "Added to cart", type: "success" });
+        setAddedToCart(true);
+        setTimeout(() => {
+          setAddedToCart(false);
+        }, 1000);
+      },
+      onError: () => {
+        showToast({ message: "Failed to add to cart", type: "error" });
+      },
+    }
+  );
 
   const handleClick = () => {
     if (!userId) {
@@ -51,6 +64,7 @@ const AddTo = ({
     }
     if (type === "wishlist") {
       addToWishList({ productId, userId });
+
       return;
     }
     if (type === "cart") {
@@ -64,6 +78,7 @@ const AddTo = ({
       {type === "wishlist" ? (
         pageType === "productDetail" ? (
           <button
+            disabled={isAddingToWishList}
             onClick={handleClick}
             className={`flex items-center px-4 py-2 text-white transition duration-300 bg-pink-500 rounded-lg hover:bg-pink-600 ${className}`}
           >
@@ -72,11 +87,16 @@ const AddTo = ({
         ) : (
           <Heart
             onClick={handleClick}
-            className="cursor-pointer hover:fill-red-500"
+            className={
+              isAddingToWishList
+                ? "disabled mr-2 cursor-not-allowed"
+                : "mr-2 cursor-pointer hover:fill-red-500"
+            }
           />
         )
       ) : pageType === "productDetail" ? (
         <button
+          disabled={isAddingToCart}
           onClick={handleClick}
           className={`flex items-center px-4 py-2 text-white transition duration-300 bg-blue-500 rounded-lg hover:bg-blue-600${className}`}
         >
@@ -85,7 +105,11 @@ const AddTo = ({
       ) : (
         <ShoppingCart
           onClick={handleClick}
-          className="mr-2 cursor-pointer hover:fill-green-500"
+          className={
+            isAddingToCart
+              ? "disabled mr-2 cursor-not-allowed"
+              : "mr-2 cursor-pointer hover:fill-green-500"
+          }
         />
       )}
     </div>

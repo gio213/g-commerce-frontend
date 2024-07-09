@@ -2,6 +2,7 @@ import { useAppContext } from "@/context/AppContext";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import AddTo from "@/components/AddTo";
+import RemoveItem from "@/components/RemoveItem";
 
 const WishListPage = () => {
   const { wishListItems } = useAppContext();
@@ -38,6 +39,11 @@ const WishListPage = () => {
               pageType="productDetail"
               type="cart"
               productId={item.productId._id}
+            />
+            <RemoveItem
+              id={item._id}
+              removeType="wishList"
+              className="px-2 py-1 text-white bg-red-500 rounded-md "
             />
           </div>
           <Separator className="bg-white" />
