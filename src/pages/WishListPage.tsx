@@ -4,20 +4,9 @@ import { Link } from "react-router-dom";
 import AddTo from "@/components/AddTo";
 import RemoveItem from "@/components/RemoveItem";
 import ClearButton from "@/components/ClearButton";
-import { ProductType } from "@/types";
 
 const WishListPage = () => {
-  const { setWishListItems, wishListItems } = useAppContext();
-
-  const addToCart = (product: ProductType) => {
-    setWishListItems([...wishListItems, product]);
-  };
-  const removeItem = (productId: string) => {
-    const updatedCartItems = wishListItems.filter(
-      (item) => item._id !== productId
-    );
-    setWishListItems(updatedCartItems);
-  };
+  const { wishListItems, addCartItem, removeCartItem } = useAppContext();
 
   return (
     <div className="flex flex-col gap-2">
@@ -36,25 +25,27 @@ const WishListPage = () => {
           <div className="flex items-center justify-between">
             {index + 1}
             <img
-              src={item.productId.imagesUrls?.[0]}
+              src={item?.wishListItem.imagesUrls[0]}
               alt="product img"
               width={50}
               height={50}
             />
             <Link
-              to={`/product/detail/${item.productId._id}`}
+              to={`/product/detail/${item?.wishListItem._id}`}
               className="w-80 hover:underline hover:text-blue-500 "
             >
-              {item.productId.name}
+              {item?.wishListItem.name}
             </Link>
             <div className="items-center ">
               <span className="font-semibold text-md">
-                €{item.productId.price}
+                €{item?.wishListItem.price}
               </span>
             </div>
             <div>
               <span className="font-semibold text-md">
-                {item.productId.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                {item?.wishListItem.countInStock > 0
+                  ? "In Stock"
+                  : "Out of Stock"}
               </span>
             </div>
             <AddTo
@@ -62,17 +53,17 @@ const WishListPage = () => {
               className="px-2 py-1 text-white bg-blue-500 rounded-md"
               pageType="productDetail"
               type="cart"
-              productId={item.productId._id}
+              productId={item?.wishListItem._id}
               onAdd={() => {
-                addToCart(item);
+                addCartItem(item);
               }}
             />
             <RemoveItem
-              id={item.productId._id}
+              id={item?.wishListItem._id}
               removeType="wishList"
               className="px-2 py-1 text-white bg-red-500 rounded-md "
               onRemove={() => {
-                removeItem(item.productId._id);
+                removeCartItem(item.wishListItem._id);
               }}
             />
           </div>

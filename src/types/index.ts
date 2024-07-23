@@ -65,7 +65,7 @@ export type CreateProductFormData = {
     lastUpdated: Date;
 }
 
-export type ProductId = {
+export type wishListAndCartItemType = {
     _id: string;
     productId: string;
     userId: string;
@@ -85,7 +85,8 @@ export type PaginatedProductParams = {
 export type ProductType = {
     count: number;
     totalPrice: number;
-    cartItem: ProductId
+    cartItem: wishListAndCartItemType
+    wishListItem: wishListAndCartItemType;
     _id: string;
     name: string;
     description: string;

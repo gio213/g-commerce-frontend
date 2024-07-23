@@ -29,10 +29,11 @@ type AppContextType = {
   categories: categoryType[];
   cartItems: ProductType[];
   addCartItem: (cartItem: ProductType) => void;
+  wishListItems: ProductType[];
+  addWishListItem: (wishListItem: ProductType) => void;
   clearItems: () => void;
   removeCartItem: (productId: string) => void;
-  wishListItems: ProductType[];
-  setWishListItems(wishListItems: ProductType[]): void;
+  removeWishListItem: (productId: string) => void;
   review: ReviewType;
   reviews: ProductReviewType[];
   addReview: (review: ProductReviewType) => void;
@@ -63,8 +64,13 @@ export const AppContextProvider = ({
     setCartItems((prevItems) => [...prevItems, cartItem]);
   };
 
+  const addWishListItem = (wishListItem: ProductType) => {
+    setWishListItems((prevItems) => [...prevItems, wishListItem]);
+  };
+
   const clearItems = () => {
     setCartItems([]);
+    setWishListItems([]);
   };
 
   const addReview = (review: ProductReviewType) => {
@@ -74,6 +80,13 @@ export const AppContextProvider = ({
   const removeCartItem = (productId: string) => {
     const updatedCartItems = cartItems.filter((item) => item._id !== productId);
     setCartItems(updatedCartItems);
+  };
+
+  const removeWishListItem = (productId: string) => {
+    const updatedWishListItems = wishListItems.filter(
+      (item) => item._id !== productId
+    );
+    setWishListItems(updatedWishListItems);
   };
 
   const { data: user } = useQuery("me", apiClient.me, {
@@ -114,19 +127,6 @@ export const AppContextProvider = ({
       refetchOnWindowFocus: false,
     }
   );
-  // useQuery<ProductReviewsPaginated>(
-  //   ["reviews-paginated", currentPage],
-  //   () =>
-  //     apiClient.getPaginatedReviews({ page: currentPage }, productId as string),
-  //   {
-  //     onSuccess: (data) => {
-  //       setReviews(data.reviews.reverse());
-  //       console.log("reviews", data.reviews);
-  //     },
-  //     refetchOnWindowFocus: false,
-  //     keepPreviousData: true, // to keep the previous data while fetching new data
-  //   }
-  // );
 
   return (
     <AppContext.Provider
@@ -137,8 +137,13 @@ export const AppContextProvider = ({
         isLoggedin: !isError,
         user,
         categories: categories || [],
+        cartItems,
+        addCartItem,
         wishListItems,
-        setWishListItems,
+        addWishListItem,
+        clearItems,
+        removeCartItem,
+        removeWishListItem,
         review: {
           comment: "",
           starRating: 0,
@@ -149,10 +154,6 @@ export const AppContextProvider = ({
         addReview,
         productId,
         setProductId,
-        cartItems,
-        addCartItem,
-        clearItems,
-        removeCartItem,
         currentPage,
         setCurrentPage,
       }}

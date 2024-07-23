@@ -9,11 +9,7 @@ type HeroProps = {
 };
 
 const Hero = ({ products, title }: HeroProps) => {
-  const { addCartItem, setWishListItems, wishListItems } = useAppContext();
-
-  const addToWishList = (product: ProductType) => {
-    setWishListItems([...wishListItems, product]);
-  };
+  const { addCartItem, addWishListItem } = useAppContext();
 
   return (
     <div>
@@ -38,7 +34,7 @@ const Hero = ({ products, title }: HeroProps) => {
                 type="wishlist"
                 productId={product._id}
                 product={product}
-                onAdd={() => addToWishList(product)}
+                onAdd={() => addWishListItem(product)}
               />
               <AddTo
                 type="cart"
