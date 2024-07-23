@@ -3,22 +3,19 @@ import * as apiClient from "../api/api-client";
 import { useAppContext } from "@/context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
+import { type ProductType } from "@/types";
 
-type AddToWhishListButtonProps = {
+type AddTo = {
   productId: string;
   type: "cart" | "wishlist";
   pageType?: "productDetail" | "cart";
   className?: string;
+  onAdd?: () => void;
+  product: ProductType;
 };
 
-const AddTo = ({
-  productId,
-  type,
-  pageType,
-  className,
-}: AddToWhishListButtonProps) => {
-  const { user, showToast, setAddedToCart, setAddedToWishlist } =
-    useAppContext();
+const AddTo = ({ productId, type, pageType, className, onAdd }: AddTo) => {
+  const { user, showToast } = useAppContext();
   const userId = user?._id;
   const navigate = useNavigate();
 
@@ -28,10 +25,6 @@ const AddTo = ({
     {
       onSuccess: () => {
         showToast({ message: "Added to wishlist", type: "success" });
-        setAddedToWishlist(true);
-        setTimeout(() => {
-          setAddedToWishlist(false);
-        }, 1000);
       },
       onError: () => {
         showToast({ message: "Failed to add to wishlist", type: "error" });
@@ -45,10 +38,6 @@ const AddTo = ({
     {
       onSuccess: () => {
         showToast({ message: "Added to cart", type: "success" });
-        setAddedToCart(true);
-        setTimeout(() => {
-          setAddedToCart(false);
-        }, 1000);
       },
       onError: () => {
         showToast({ message: "Failed to add to cart", type: "error" });
@@ -64,11 +53,12 @@ const AddTo = ({
     }
     if (type === "wishlist") {
       addToWishList({ productId, userId });
-
+      onAdd && onAdd();
       return;
     }
     if (type === "cart") {
       addToCart({ productId, userId });
+      onAdd && onAdd();
       return;
     }
   };
@@ -79,14 +69,18 @@ const AddTo = ({
         pageType === "productDetail" ? (
           <button
             disabled={isAddingToWishList}
-            onClick={handleClick}
+            onClick={() => {
+              handleClick();
+            }}
             className={`flex items-center px-4 py-2 text-white transition duration-300 bg-pink-500 rounded-lg hover:bg-pink-600 ${className}`}
           >
             <Heart className="mr-2" /> Wishlist
           </button>
         ) : (
           <Heart
-            onClick={handleClick}
+            onClick={() => {
+              handleClick();
+            }}
             className={
               isAddingToWishList
                 ? "disabled mr-2 cursor-not-allowed"
@@ -97,7 +91,9 @@ const AddTo = ({
       ) : pageType === "productDetail" ? (
         <button
           disabled={isAddingToCart}
-          onClick={handleClick}
+          onClick={() => {
+            handleClick();
+          }}
           className={`flex items-center px-4 py-2 text-white transition duration-300 bg-blue-500 rounded-lg hover:bg-blue-600${className}`}
         >
           <ShoppingCart className="mr-2" /> Add to Cart

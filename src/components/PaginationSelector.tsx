@@ -8,25 +8,29 @@ import {
 } from "./ui/pagination";
 
 type Props = {
-  page: number;
-  pages: number;
+  currentPage: number;
+  totalPages: number;
   onPageChange: (page: number) => void;
 };
 
-const PaginationSelector = ({ page, pages, onPageChange }: Props) => {
+const PaginationSelector = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: Props) => {
   const pageNumbers = [];
-  for (let i = 1; i <= pages; i++) {
+  for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
 
   return (
     <Pagination>
       <PaginationContent>
-        {page !== 1 && (
+        {currentPage !== 1 && (
           <PaginationItem>
             <PaginationPrevious
               href="#"
-              onClick={() => onPageChange(page - 1)}
+              onClick={() => onPageChange(currentPage - 1)}
             />
           </PaginationItem>
         )}
@@ -36,15 +40,18 @@ const PaginationSelector = ({ page, pages, onPageChange }: Props) => {
             <PaginationLink
               href="#"
               onClick={() => onPageChange(number)}
-              isActive={page === number}
+              isActive={currentPage === number}
             >
               {number}
             </PaginationLink>
           </PaginationItem>
         ))}
-        {page !== pageNumbers.length && (
+        {currentPage !== pageNumbers.length && (
           <PaginationItem>
-            <PaginationNext href="#" onClick={() => onPageChange(page + 1)} />
+            <PaginationNext
+              href="#"
+              onClick={() => onPageChange(currentPage + 1)}
+            />
           </PaginationItem>
         )}
       </PaginationContent>

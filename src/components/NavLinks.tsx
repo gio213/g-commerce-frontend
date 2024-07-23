@@ -9,7 +9,6 @@ import {
 import { useAppContext } from "@/context/AppContext";
 const NavLinks = () => {
   const { categories } = useAppContext();
-  console.log("categories", categories);
   return (
     <NavigationMenu>
       <NavigationMenuList>

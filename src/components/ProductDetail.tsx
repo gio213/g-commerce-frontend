@@ -51,11 +51,13 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
           )}
           <div className="flex gap-4">
             <AddTo
+              product={product}
               type="cart"
               pageType="productDetail"
               productId={product._id}
             />
             <AddTo
+              product={product}
               type="wishlist"
               pageType="productDetail"
               productId={product._id}

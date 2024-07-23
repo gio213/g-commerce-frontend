@@ -1,7 +1,6 @@
-import { categoryType, LoginFormData, ProductsResponse, ProductType, RegisterFormData, UpdateUser, UserType } from "@/types";
-import axios from "axios";
+import { categoryType, CreateProductReviewFormData, LoginFormData, PaginatedProductParams, ProductDetailPageData, ProductReviewsPaginated, ProductsResponse, ProductType, RegisterFormData, UpdateUser, UserType } from "@/types";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
-
+import axios from 'axios';
 export const register = async (formData: RegisterFormData) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/api/users/register`, formData, {
@@ -149,8 +148,25 @@ export const getAllProducts = async (): Promise<ProductsResponse> => {
     return data;
 };
 
+export const getPaginatedProducts = async ({ page = 1, limit = 8 }: PaginatedProductParams): Promise<ProductsResponse> => {
+    const response = await fetch(`${API_BASE_URL}/api/product/products-paginated?page=${page}&limit=${limit}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred fetching products');
+    }
 
-export const getProductById = async (productId: string): Promise<ProductsResponse> => {
+
+
+    const data = await response.json();
+    return data;
+};
+
+
+export const getProductById = async (productId: string): Promise<ProductDetailPageData> => {
     const response = await fetch(`${API_BASE_URL}/api/product/detail/${productId}`, {
         method: 'GET',
         credentials: 'include',
@@ -164,6 +180,23 @@ export const getProductById = async (productId: string): Promise<ProductsRespons
     }
     return response.json()
 }
+export const getPaginatedReviews = async ({ page = 1, limit = 4 }: PaginatedProductParams, productId: string): Promise<ProductReviewsPaginated> => {
+    const response = await fetch(`${API_BASE_URL}/api/product/reviews-paginated/${productId}?page=${page}&limit=${limit}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred fetching products');
+    }
+
+
+
+    const data = await response.json();
+    return data;
+};
+
 
 
 export const updateProduct = async (productId: string, productData: ProductType) => {
@@ -303,7 +336,45 @@ export const deleteWishList = async (wishListItemId: string) => {
     return response.json()
 }
 
+export const clearCart = async () => {
+    const response = await fetch(`${API_BASE_URL}/api/cart/clear-cart`, {
+        method: 'DELETE',
+        credentials: 'include',
 
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred clearing cart')
+    }
+    return response.json()
+}
 
+export const clearWishlist = async () => {
+    const response = await fetch(`${API_BASE_URL}/api/wishlist/clear-wishlist`, {
+        method: 'DELETE',
+        credentials: 'include',
+
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred clearing wishlist')
+    }
+    return response.json()
+}
+
+export const createReview = async ({ comment, productId, starRating }: CreateProductReviewFormData) => {
+    const response = await fetch(`${API_BASE_URL}/api/product/create-review/${productId}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ starRating, comment })
+    });
+
+    if (!response.ok) {
+        throw new Error('An error occurred creating review');
+    }
+
+    return response.json();
+};
 
 

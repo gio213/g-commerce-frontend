@@ -1,12 +1,18 @@
 import { ProductType } from "@/types";
 import AddTo from "./AddTo";
 import { Link } from "react-router-dom";
+import { useAppContext } from "@/context/AppContext";
 
 type ProductCartProps = {
   product: ProductType;
 };
 
 const ProductCard = ({ product }: ProductCartProps) => {
+  const { setWishListItems, wishListItems, addCartItem } = useAppContext();
+
+  const addToWishList = (product: ProductType) => {
+    setWishListItems([...wishListItems, product]);
+  };
   return (
     <div className="flex flex-col w-64 my-10 overflow-hidden bg-white border border-gray-100 rounded-lg shadow-md h-96 group">
       <Link
@@ -39,16 +45,20 @@ const ProductCard = ({ product }: ProductCartProps) => {
         </div>
         <div className="flex flex-col gap-1">
           <AddTo
+            product={product}
             className="items-center justify-center flex-1 w-full"
             pageType="productDetail"
             type="cart"
             productId={product._id}
+            onAdd={() => addCartItem(product)}
           />
           <AddTo
             className="items-center justify-center flex-1 w-full"
             pageType="productDetail"
             type="wishlist"
             productId={product._id}
+            product={product}
+            onAdd={() => addToWishList(product)}
           />
         </div>
       </div>

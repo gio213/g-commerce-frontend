@@ -5,11 +5,17 @@ import { Button } from "./ui/button";
 
 type RemoveItemProps = {
   id: string;
-  removeType: "cart " | "wishList";
+  removeType?: "cart" | "wishList";
   className?: string;
+  onRemove?: () => void;
 };
 
-const RemoveItem = ({ id, removeType, className }: RemoveItemProps) => {
+const RemoveItem = ({
+  id,
+  removeType,
+  className,
+  onRemove,
+}: RemoveItemProps) => {
   const { showToast } = useAppContext();
   const { mutate: removeCartItem, isLoading: isRmoveIngFromCart } = useMutation(
     apiClient.deleteCartItem,
@@ -34,7 +40,7 @@ const RemoveItem = ({ id, removeType, className }: RemoveItemProps) => {
     });
 
   const handleRemove = (id: string) => {
-    if (removeType === "cart ") {
+    if (removeType === "cart") {
       removeCartItem(id);
     } else {
       removeWishListItem(id);
@@ -46,7 +52,10 @@ const RemoveItem = ({ id, removeType, className }: RemoveItemProps) => {
       className={className}
       size="sm"
       variant="destructive"
-      onClick={() => handleRemove(id)}
+      onClick={() => {
+        handleRemove(id);
+        onRemove && onRemove();
+      }}
       disabled={isRmoveIngFromCart || isRemoveIngFromWishList}
     >
       Remove

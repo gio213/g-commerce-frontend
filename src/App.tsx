@@ -17,6 +17,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import ShoppingCard from "./pages/ShoppingCard";
 import PersonPage from "./pages/PersonPage";
 import WishListPage from "./pages/WishListPage";
+
 function App() {
   const { isLoggedin, user } = useAppContext();
   return (
@@ -30,22 +31,6 @@ function App() {
             </Layout>
           }
         />
-        {/* <Route
-        path="/search"
-        element={
-          <Layout>
-            <Search />
-          </Layout>
-        }
-      /> */}
-        {/* <Route
-        path="/detail/:hotelId"
-        element={
-          <Layout>
-            <Detail />
-          </Layout>
-        }
-      /> */}
         <Route
           path="/register"
           element={
@@ -54,16 +39,8 @@ function App() {
             </Layout>
           }
         />
-        {/* <Route
-        path="/password-reset"
-        element={
-          <Layout>
-            <PasswordReset />
-          </Layout>
-        }
-      /> */}
         <Route
-          path="sign-in"
+          path="/sign-in"
           element={
             <Layout>
               <Login />
@@ -78,7 +55,7 @@ function App() {
             </Layout>
           }
         />
-        {isLoggedin && user?.role === "admin" && (
+        {isLoggedin && user?.role === "admin" ? (
           <>
             <Route
               path="/admin-dashboard"
@@ -105,8 +82,10 @@ function App() {
               }
             />
           </>
+        ) : (
+          <Route path="*" element={<Navigate to="/" />} />
         )}
-        {isLoggedin && (
+        {isLoggedin ? (
           <>
             <Route
               path="/user-profile"
@@ -133,8 +112,9 @@ function App() {
               }
             />
           </>
+        ) : (
+          <Route path="*" element={<Navigate to="/" />} />
         )}
-
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

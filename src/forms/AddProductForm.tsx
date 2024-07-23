@@ -28,7 +28,6 @@ const AddProductForm = () => {
   const handleDropdownChange = (value: string) => {
     setValue(value);
     setFormValue("category", value);
-    console.log(value);
   };
   const { isLoading, mutate } = useMutation(apiClient.createProduct, {
     onSuccess: () => {
@@ -84,10 +83,6 @@ const AddProductForm = () => {
       setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   };
-
-  useEffect(() => {
-    console.log("selectedFiles", selectedFiles);
-  }, [selectedFiles]);
 
   return (
     <div className="w-full">
