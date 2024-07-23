@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ProductType } from "@/types";
 import { CheckCheck, OctagonX } from "lucide-react";
 import AddTo from "./AddTo";
+import { useAppContext } from "@/context/AppContext";
 
 type ProductDetailProps = {
   product: ProductType;
@@ -9,6 +10,7 @@ type ProductDetailProps = {
 
 const ProductDetail = ({ product }: ProductDetailProps) => {
   const [selectedImage, setSelectedImage] = useState(product.imagesUrls[0]);
+  const { addCartItem, addWishListItem } = useAppContext();
   const [isZoomed, setIsZoomed] = useState(false);
 
   return (
@@ -55,12 +57,14 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
               type="cart"
               pageType="productDetail"
               productId={product._id}
+              onAdd={() => addCartItem(product)}
             />
             <AddTo
               product={product}
               type="wishlist"
               pageType="productDetail"
               productId={product._id}
+              onAdd={() => addWishListItem(product)}
             />
           </div>
         </div>

@@ -3,11 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import UserNameMenu from "./UserNameMenu";
 import { Button } from "./ui/button";
 import { useAppContext } from "@/context/AppContext";
-import { useEffect } from "react";
 
 const MainMenu = () => {
   const { isLoggedin, cartItems, wishListItems } = useAppContext();
-  useEffect(() => {}, [cartItems.length]);
+
   const navigate = useNavigate();
 
   return (

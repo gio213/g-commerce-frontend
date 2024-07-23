@@ -8,11 +8,8 @@ type ProductCartProps = {
 };
 
 const ProductCard = ({ product }: ProductCartProps) => {
-  const { setWishListItems, wishListItems, addCartItem } = useAppContext();
+  const { addCartItem, addWishListItem } = useAppContext();
 
-  const addToWishList = (product: ProductType) => {
-    setWishListItems([...wishListItems, product]);
-  };
   return (
     <div className="flex flex-col w-64 my-10 overflow-hidden bg-white border border-gray-100 rounded-lg shadow-md h-96 group">
       <Link
@@ -58,7 +55,7 @@ const ProductCard = ({ product }: ProductCartProps) => {
             type="wishlist"
             productId={product._id}
             product={product}
-            onAdd={() => addToWishList(product)}
+            onAdd={() => addWishListItem(product)}
           />
         </div>
       </div>
