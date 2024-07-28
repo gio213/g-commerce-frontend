@@ -1,4 +1,6 @@
-import { HeartIcon, ShoppingBasket } from "lucide-react";
+import { HeartIcon } from "lucide-react";
+import { PiShoppingCartBold } from "react-icons/pi";
+
 import { Link, useNavigate } from "react-router-dom";
 import UserNameMenu from "./UserNameMenu";
 import { Button } from "./ui/button";
@@ -8,6 +10,9 @@ const MainMenu = () => {
   const { isLoggedin, cartItems, wishListItems } = useAppContext();
 
   const navigate = useNavigate();
+
+  //console.log("cartItems", cartItems);
+  //console.log("wishListItems", wishListItems);
 
   return (
     <span className="items-center hidden space-x-2 md:flex">
@@ -20,7 +25,10 @@ const MainMenu = () => {
             >
               {cartItems.length > 0 ? (
                 <div className="relative">
-                  <ShoppingBasket size={35} className="hover:fill-green-500" />
+                  <PiShoppingCartBold
+                    size={35}
+                    className="hover:fill-green-500"
+                  />
                   <span className="absolute top-0 right-0 px-1 text-xs text-white bg-red-500 rounded-full">
                     <p className="text-[7px] font-bold text-white">
                       {cartItems?.length}
@@ -28,7 +36,10 @@ const MainMenu = () => {
                   </span>
                 </div>
               ) : (
-                <ShoppingBasket size={35} className="hover:fill-green-500" />
+                <PiShoppingCartBold
+                  size={35}
+                  className="hover:fill-green-500"
+                />
               )}
             </Link>
             <Link
@@ -45,7 +56,7 @@ const MainMenu = () => {
                   </span>
                 </div>
               ) : (
-                <HeartIcon size={35} className="hover:fill-green-500" />
+                <HeartIcon size={35} className="hover:fill-red-500" />
               )}
             </Link>
             <UserNameMenu />

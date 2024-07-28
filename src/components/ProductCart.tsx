@@ -2,6 +2,7 @@ import { ProductType } from "@/types";
 import AddTo from "./AddTo";
 import { Link } from "react-router-dom";
 import { useAppContext } from "@/context/AppContext";
+import { motion } from "framer-motion";
 
 type ProductCartProps = {
   product: ProductType;
@@ -11,7 +12,12 @@ const ProductCard = ({ product }: ProductCartProps) => {
   const { addCartItem, addWishListItem } = useAppContext();
 
   return (
-    <div className="flex flex-col w-64 my-10 overflow-hidden bg-white border border-gray-100 rounded-lg shadow-md h-96 group">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      className="flex flex-col w-64 my-10 overflow-hidden bg-white border border-gray-100 rounded-lg shadow-md h-96 group"
+    >
       <Link
         to={`/product/detail/${product._id}`}
         className="relative flex h-48 mx-3 mt-3 overflow-hidden rounded-xl"
@@ -59,7 +65,7 @@ const ProductCard = ({ product }: ProductCartProps) => {
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

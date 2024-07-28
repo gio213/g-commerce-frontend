@@ -1,6 +1,6 @@
 import { ProductDetailPageData } from "@/types";
 import { useQuery } from "react-query";
-import * as apiClient from "../api/api-client";
+import * as apiClient from "../../api-client";
 import { useParams } from "react-router-dom";
 import Loading from "@/components/Loading";
 import ProductDetail from "@/components/ProductDetail";
@@ -47,9 +47,9 @@ const ProductDetailPage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2">
       <ProductDetail product={data!.productDetail} />
-      <div className="p-10 rounded-lg shadow-lg bg-gray-50">
+      <div className="p-10 overflow-scroll rounded-lg shadow-lg bg-gray-50 h-[700px]">
         <span className="flex justify-end w-full">
           <ProductReviewForm productId={productId!} />
         </span>

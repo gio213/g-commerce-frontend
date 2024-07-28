@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import * as apiClient from "../../api/api-client";
+import * as apiClient from "../../../api-client";
 import Loading from "@/components/Loading";
 import AdminProductCard from "@/components/admin/AdminProductCard";
 import { ProductsResponse } from "@/types";

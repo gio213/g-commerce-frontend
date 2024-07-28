@@ -2,6 +2,7 @@ import { ProductType } from "@/types";
 import { Link } from "react-router-dom";
 import AddTo from "./AddTo";
 import { useAppContext } from "@/context/AppContext";
+import { motion } from "framer-motion";
 
 type HeroProps = {
   products: ProductType[];
@@ -12,11 +13,21 @@ const Hero = ({ products, title }: HeroProps) => {
   const { addCartItem, addWishListItem } = useAppContext();
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <h1 className="text-2xl font-bold text-center">{title}</h1>
       <div className="flex w-full p-4 space-x-4 carousel carousel-center rounded-box bg-customBlue">
-        {products.map((product) => (
-          <div className="relative carousel-item" key={product._id}>
+        {products.map((product, index) => (
+          <motion.div
+            key={product._id}
+            className="relative carousel-item"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
             <Link to={`/product/detail/${product._id}`}>
               <img
                 src={product.imagesUrls[0]}
@@ -43,10 +54,10 @@ const Hero = ({ products, title }: HeroProps) => {
                 onAdd={() => addCartItem(product)}
               />
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

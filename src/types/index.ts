@@ -65,28 +65,32 @@ export type CreateProductFormData = {
     lastUpdated: Date;
 }
 
-export type wishListAndCartItemType = {
-    _id: string;
-    productId: string;
-    userId: string;
-    name: string;
-    imagesUrls: string[];
-    price: number;
-    countInStock: number;
-}
+
 
 export type PaginatedProductParams = {
     page?: number;
     limit?: number;
 }
 
+export type WishListAndCartItems = {
+    category: string;
+    countInStock: number;
+    description: string;
+    createdAt: string;
+    imagesUrls: string[];
+    lastUpdated: string;
+    name: string;
+    price: number;
+    updatedAt: string;
+    userId: string;
+    _id: string;
 
+
+}
 
 export type ProductType = {
     count: number;
     totalPrice: number;
-    cartItem: wishListAndCartItemType
-    wishListItem: wishListAndCartItemType;
     _id: string;
     name: string;
     description: string;
@@ -96,6 +100,7 @@ export type ProductType = {
     category: string;
     lastUpdated: Date;
     userId: string;
+    docId: string;
 }
 
 

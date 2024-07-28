@@ -16,7 +16,7 @@ import { useState } from "react";
 import { Textarea } from "./ui/textarea";
 import { useAppContext } from "@/context/AppContext";
 import { useMutation } from "react-query";
-import * as apiClient from "../api/api-client";
+import * as apiClient from "../../api-client";
 import { CreateProductReviewFormData } from "@/types";
 import Loading from "./Loading";
 import { Link } from "react-router-dom";
@@ -29,7 +29,8 @@ const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { isLoggedin, showToast, addReview, user } = useAppContext();
+  const { isLoggedin, showToast, addReview, user, addPreview } =
+    useAppContext();
 
   const createReviewId = () => {
     const reviewId = Math.random().toString(36).substring(2, 11);
@@ -69,7 +70,9 @@ const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
       productId,
       starRating: rating,
       reviewId: createReviewId(), // Include reviewId here
+      previewAded: addPreview(),
     };
+    console.log("reviewData", reviewData);
 
     const reviewDataForState = {
       ...reviewData,
@@ -91,7 +94,9 @@ const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
       {isLoggedin ? (
         <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <AlertDialogTrigger asChild>
-            <Button variant={"outline"}>Write a review</Button>
+            <Button className="font-bold bg-green-100" variant={"outline"}>
+              Write a review
+            </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
@@ -142,7 +147,7 @@ const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
           </AlertDialogContent>
         </AlertDialog>
       ) : (
-        <Button variant={"outline"}>
+        <Button className="font-bold bg-green-100" variant={"outline"}>
           <Link to="/sign-in">Login to write a review</Link>
         </Button>
       )}

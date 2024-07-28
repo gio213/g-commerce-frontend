@@ -2,7 +2,7 @@ import { ProductType } from "@/types";
 import { Input } from "../ui/input";
 import { Link } from "react-router-dom";
 import { useMutation } from "react-query";
-import * as apiClient from "../../api/api-client";
+import * as apiClient from "../../../api-client";
 import { useAppContext } from "@/context/AppContext";
 import DeleteConfirmationDialog from "../AlertDialog";
 import { useForm } from "react-hook-form";

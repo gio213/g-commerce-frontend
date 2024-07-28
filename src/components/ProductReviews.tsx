@@ -1,6 +1,10 @@
 import { timeAgo } from "@/helper/helper";
 import { Reviews } from "../types/index";
 import { useEffect, useRef, useState } from "react";
+import { useAppContext } from "@/context/AppContext";
+import { Button } from "./ui/button";
+import { motion } from "framer-motion";
+
 type ProductReviewsProps = {
   reviews: Reviews[];
 };
@@ -9,38 +13,37 @@ const ProductReviews = ({ reviews }: ProductReviewsProps) => {
   const reviewRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [lastReviewIndex, setLastReviewIndex] = useState<number | null>(null);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const { previewAdded, user } = useAppContext();
+
   useEffect(() => {
-    if (reviews.length > 0) {
+    if (reviews.length > 0 && previewAdded) {
       setLastReviewIndex(0);
       setIsAnimating(true);
       const reviewElement = reviewRefs.current[0];
       if (reviewElement) {
         reviewElement.scrollIntoView({ behavior: "smooth" });
       }
-      const timer = setTimeout(() => {
-        setIsAnimating(false);
-      }, 10000); // 10 seconds
-
-      return () => clearTimeout(timer);
     }
-  }, [reviews]);
+  }, [previewAdded, reviews]);
 
   useEffect(() => {
-    if (reviews.length > 0) {
-      setLastReviewIndex(0);
-      const reviewElement = reviewRefs.current[0];
-      if (reviewElement) {
-        reviewElement.scrollIntoView({ behavior: "smooth" });
-      }
+    if (!previewAdded) {
+      setIsAnimating(false);
     }
-  }, [reviews]);
+  }, [previewAdded]);
+
   return (
-    <div className="flex flex-col items-center justify-center ">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="flex flex-col items-center justify-center"
+    >
       <span className="flex items-center justify-between w-full">
         {reviews.length > 0 ? (
-          <h1 className="text-3xl font-bold ">Reviews</h1>
+          <h1 className="text-3xl font-bold">Reviews</h1>
         ) : (
-          <h1 className="text-3xl font-bold ">No reviews yet</h1>
+          <h1 className="text-3xl font-bold">No reviews yet</h1>
         )}
         <p>
           total reviews: <span className="font-bold">{reviews.length}</span>
@@ -48,14 +51,22 @@ const ProductReviews = ({ reviews }: ProductReviewsProps) => {
       </span>
 
       {reviews.map((review, index) => (
-        <div
-          className={`p-4  w-full ${index === lastReviewIndex && isAnimating ? "animate-pulse" : ""}`}
+        <motion.div
+          className={`w-full ${index === lastReviewIndex && isAnimating ? "animate-pulse" : ""}`}
           key={index}
           ref={(el) => (reviewRefs.current[index] = el)}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
         >
           <div
-            className={` w-full flex flex-col justify-between p-8 mx-auto mt-24 border rounded-md shadow-sm bg-customBlue border-neutral-800 ${index === lastReviewIndex && isAnimating ? "animate-pulse border-green-500 bg-green-100" : ""}`}
+            className={`w-full flex flex-col justify-between p-8 mx-auto mt-24 border rounded-md shadow-sm bg-customBlue border-neutral-800 ${index === lastReviewIndex && isAnimating ? "animate-pulse border-green-500 bg-green-100" : ""}`}
           >
+            {review.userId === user?._id && (
+              <div className="flex justify-end w-full">
+                <Button variant={"destructive"}>Delete</Button>
+              </div>
+            )}
             <span className="flex justify-end w-full">
               {timeAgo(review.createdAt!)}
             </span>
@@ -80,7 +91,7 @@ const ProductReviews = ({ reviews }: ProductReviewsProps) => {
               ))}
             </div>
 
-            <div className="flex items-center gap-6 mt-6 ">
+            <div className="flex items-center gap-6 mt-6">
               <div className="flex items-center justify-center w-10 h-10 overflow-hidden rounded-full shadow-sm outline-neutral-800 bg-cyan-50">
                 <div className="relative inline-block overflow-hidden rounded-lg border-neutral-800">
                   {review.firstName![0].toUpperCase() +
@@ -100,9 +111,9 @@ const ProductReviews = ({ reviews }: ProductReviewsProps) => {
               {review.comment}
             </p>
           </div>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 

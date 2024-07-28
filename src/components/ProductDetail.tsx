@@ -3,6 +3,7 @@ import { ProductType } from "@/types";
 import { CheckCheck, OctagonX } from "lucide-react";
 import AddTo from "./AddTo";
 import { useAppContext } from "@/context/AppContext";
+import { motion } from "framer-motion";
 
 type ProductDetailProps = {
   product: ProductType;
@@ -14,28 +15,46 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
   const [isZoomed, setIsZoomed] = useState(false);
 
   return (
-    <div className="p-10 rounded-lg shadow-lg bg-gray-50">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="p-10 rounded-lg shadow-lg bg-gray-50"
+    >
       <div className="flex flex-col items-center gap-10 md:flex-row">
-        <div className="flex justify-center flex-1">
+        <motion.div
+          className="flex justify-center flex-1"
+          initial={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <img
             src={selectedImage}
             alt="Selected product"
             className={`cursor-pointer transition-transform duration-300 ${isZoomed ? "scale-125" : "scale-100"} rounded-lg shadow-xl`}
             onClick={() => setIsZoomed(!isZoomed)}
           />
-        </div>
+        </motion.div>
         <div className="grid grid-cols-3 gap-4 mb-5">
           {product.imagesUrls.map((image, index) => (
-            <img
+            <motion.img
               key={index}
               src={image}
               alt={`product image ${index + 1}`}
               className="object-cover w-full h-24 rounded-md cursor-pointer"
               onClick={() => setSelectedImage(image)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             />
           ))}
         </div>
-        <div className="flex flex-col items-start flex-1">
+        <motion.div
+          className="flex flex-col items-start flex-1"
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <h1 className="mb-4 text-4xl font-bold">{product.name}</h1>
           <p className="mb-2 text-gray-700">{product.description}</p>
           <p className="mb-2 text-lg font-semibold">Price: ${product.price}</p>
@@ -67,9 +86,9 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
               onAdd={() => addWishListItem(product)}
             />
           </div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

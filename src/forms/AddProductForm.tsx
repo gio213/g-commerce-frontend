@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import AdminDropDownForms from "./AdminDropDownForms";
 import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
-import * as apiClient from "../api/api-client";
+import * as apiClient from "../../api-client";
 import ImagePreview from "@/components/ImagePreview";
 import { useAppContext } from "@/context/AppContext";
 import Loading from "@/components/Loading";

@@ -1,6 +1,6 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import { useQuery } from "react-query";
-import * as apiClient from "../api/api-client.ts";
+import * as apiClient from "../../api-client.ts";
 import Toast from "@/components/Toast.tsx";
 import type {
   categoryType,
@@ -28,7 +28,8 @@ type AppContextType = {
   user: UserType | undefined;
   categories: categoryType[];
   cartItems: ProductType[];
-  addCartItem: (cartItem: ProductType) => void;
+  addCartItem: (item: ProductType) => void;
+
   wishListItems: ProductType[];
   addWishListItem: (wishListItem: ProductType) => void;
   clearItems: () => void;
@@ -41,6 +42,8 @@ type AppContextType = {
   setProductId: (productId: string) => void;
   currentPage: number;
   setCurrentPage: (currentPage: number) => void;
+  previewAdded: boolean;
+  addPreview: () => void;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -55,17 +58,34 @@ export const AppContextProvider = ({
   const [wishListItems, setWishListItems] = useState<ProductType[]>([]);
   const [productId, setProductId] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [previewAdded, setPreviewAdded] = useState(false);
+
+  const addPreview = () => {
+    setPreviewAdded(true);
+    return true;
+  };
+
+  useEffect(() => {
+    if (previewAdded) {
+      const timer = setTimeout(() => {
+        setPreviewAdded(false);
+      }, 10000); // 10 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [previewAdded]);
+
   const { isError } = useQuery("validateToken", apiClient.validateToken, {
     retry: false,
   });
   const [reviews, setReviews] = useState<ProductReviewType[]>([]);
 
   const addCartItem = (cartItem: ProductType) => {
-    setCartItems((prevItems) => [...prevItems, cartItem]);
+    setCartItems((prevItems) => [...prevItems, { ...cartItem }]);
   };
 
   const addWishListItem = (wishListItem: ProductType) => {
-    setWishListItems((prevItems) => [...prevItems, wishListItem]);
+    setWishListItems((prevItems) => [...prevItems, { ...wishListItem }]);
   };
 
   const clearItems = () => {
@@ -78,13 +98,15 @@ export const AppContextProvider = ({
   };
 
   const removeCartItem = (productId: string) => {
-    const updatedCartItems = cartItems.filter((item) => item._id !== productId);
+    const updatedCartItems = cartItems.filter(
+      (item) => item.docId !== productId
+    );
     setCartItems(updatedCartItems);
   };
 
   const removeWishListItem = (productId: string) => {
     const updatedWishListItems = wishListItems.filter(
-      (item) => item._id !== productId
+      (item) => item.docId !== productId
     );
     setWishListItems(updatedWishListItems);
   };
@@ -105,6 +127,10 @@ export const AppContextProvider = ({
     enabled: !isError,
     onSuccess: (data) => {
       setCartItems(data);
+    },
+    onError: (error) => {
+      console.error("Error fetching cart items:", error);
+      setCartItems([]);
     },
     refetchOnWindowFocus: false,
   });
@@ -156,6 +182,8 @@ export const AppContextProvider = ({
         setProductId,
         currentPage,
         setCurrentPage,
+        previewAdded,
+        addPreview,
       }}
     >
       {toast && (

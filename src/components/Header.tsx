@@ -28,6 +28,8 @@ const Header = () => {
         <input placeholder="Search" className="input input-bordered" />
         {isLoggedin && user?.role === "admin" && (
           <Button
+            className="hidden font-bold md:block"
+            variant={"ghost"}
             onClick={() => {
               navigate("/admin-dashboard");
             }}
