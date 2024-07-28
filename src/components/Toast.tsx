@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type ToastProps = {
   message: string;
@@ -9,12 +10,12 @@ type ToastProps = {
 
 const Toast = ({ message, type, onClose }: ToastProps) => {
   useEffect(() => {
-    let toastId: string | null = null;
+    let toastId: React.ReactText | null = null;
 
     if (type === "success") {
-      toastId = toast.success(message, { duration: 5000 });
+      toastId = toast.success(message, { autoClose: 5000 });
     } else if (type === "error") {
-      toastId = toast.error(message, { duration: 5000 });
+      toastId = toast.error(message, { autoClose: 5000 });
     }
 
     const timer = setTimeout(() => {
@@ -22,14 +23,14 @@ const Toast = ({ message, type, onClose }: ToastProps) => {
     }, 5000);
 
     return () => {
-      if (toastId) {
+      if (toastId !== null) {
         toast.dismiss(toastId);
       }
       clearTimeout(timer);
     };
   }, [message, type, onClose]);
 
-  return <Toaster position="bottom-right" />;
+  return <ToastContainer position="bottom-right" />;
 };
 
 export default Toast;
