@@ -10,37 +10,41 @@ const Header = () => {
   const { user, isLoggedin } = useAppContext();
   const navigate = useNavigate();
   return (
-    <header className="shadow-2xl bg-white-800">
-      <div className="container flex items-center justify-between mx-auto">
-        <div>
+    <header className="shadow-2xl ">
+      <div className="container flex items-center justify-between px-6 py-4 mx-auto">
+        <div className="flex items-center">
           <Link to="/">
             <img
               src={logoImg}
-              alt="logo "
+              alt="logo"
               width={100}
               height={100}
-              className=""
+              className="mr-4"
             />
           </Link>
+          <NavLinks />
         </div>
 
-        <NavLinks />
-        <input placeholder="Search" className="input input-bordered" />
-        {isLoggedin && user?.role === "admin" && (
-          <Button
-            className="hidden font-bold md:block"
-            variant={"ghost"}
-            onClick={() => {
-              navigate("/admin-dashboard");
-            }}
-          >
-            Admin Dashboard
-          </Button>
-        )}
-        <MainMenu />
-
-        <div className="block md:hidden">
-          <MobileNav />
+        <div className="flex items-center space-x-4">
+          <input
+            placeholder="Search"
+            className="px-4 py-2 rounded-lg input input-bordered"
+          />
+          {isLoggedin && user?.role === "admin" && (
+            <Button
+              className="hidden font-bold md:block"
+              variant={"ghost"}
+              onClick={() => {
+                navigate("/admin-dashboard");
+              }}
+            >
+              Admin Dashboard
+            </Button>
+          )}
+          <MainMenu />
+          <div className="block md:hidden">
+            <MobileNav />
+          </div>
         </div>
       </div>
     </header>

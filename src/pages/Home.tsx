@@ -1,7 +1,7 @@
 import Hero from "@/components/Hero";
 import { ProductsResponse } from "@/types";
 import { useQuery } from "react-query";
-import * as apiClient from "../../api-client";
+import * as apiClient from "../api/api-client";
 import Loading from "@/components/Loading";
 import ProductCart from "@/components/ProductCart";
 import { useEffect, useState } from "react";

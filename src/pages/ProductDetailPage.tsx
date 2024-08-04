@@ -1,6 +1,6 @@
 import { ProductDetailPageData } from "@/types";
 import { useQuery } from "react-query";
-import * as apiClient from "../../api-client";
+import * as apiClient from "../api/api-client";
 import { useParams } from "react-router-dom";
 import Loading from "@/components/Loading";
 import ProductDetail from "@/components/ProductDetail";

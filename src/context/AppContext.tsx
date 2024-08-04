@@ -1,7 +1,11 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
-import { useQuery } from "react-query";
-import * as apiClient from "../../api-client.ts";
+import { useMutation, useQuery } from "react-query";
+import * as apiClient from "../api/api-client.ts";
 import Toast from "@/components/Toast.tsx";
+import { loadStripe, Stripe } from "@stripe/stripe-js";
+
+const STRIPE_PUB_KEY = (import.meta.env.VITE_STRIPE_PUB_KEY as string) || "";
+
 import type {
   categoryType,
   ProductDetailPageData,
@@ -23,6 +27,7 @@ type ReviewType = {
 };
 
 type AppContextType = {
+  stripePromise: Promise<Stripe | null>;
   showToast: (toastMessage: ToastMessage) => void;
   isLoggedin: boolean;
   user: UserType | undefined;
@@ -47,6 +52,8 @@ type AppContextType = {
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
+
+const stripePromise = loadStripe(STRIPE_PUB_KEY);
 
 export const AppContextProvider = ({
   children,
@@ -91,6 +98,7 @@ export const AppContextProvider = ({
   const clearItems = () => {
     setCartItems([]);
     setWishListItems([]);
+    clearCartFromDb();
   };
 
   const addReview = (review: ProductReviewType) => {
@@ -123,6 +131,8 @@ export const AppContextProvider = ({
     }
   );
 
+  const { mutate: clearCartFromDb } = useMutation(apiClient.clearCart, {});
+
   useQuery("cart", apiClient.getCartItems, {
     enabled: !isError,
     onSuccess: (data) => {
@@ -151,6 +161,7 @@ export const AppContextProvider = ({
         setReviews(data.reviews.reverse());
       },
       refetchOnWindowFocus: false,
+      enabled: !!productId,
     }
   );
 
@@ -161,6 +172,7 @@ export const AppContextProvider = ({
           setToast(toastMessage);
         },
         isLoggedin: !isError,
+        stripePromise,
         user,
         categories: categories || [],
         cartItems,

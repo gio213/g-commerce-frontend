@@ -1,6 +1,6 @@
 import { useAppContext } from "@/context/AppContext";
 import Loading from "@/components/Loading";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import RemoveItem from "@/components/RemoveItem";
 import ClearButton from "@/components/ClearButton";
@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 
 const ShoppingCard = () => {
   const { cartItems, clearItems, removeCartItem } = useAppContext();
-  console.log("cartItems", cartItems);
+  const navigate = useNavigate();
 
   if (!cartItems) {
     return <Loading />;
@@ -106,7 +106,7 @@ const ShoppingCard = () => {
       <div className="flex items-center justify-between p-4 mb-4 bg-white rounded-lg shadow-md">
         <h1 className="text-lg font-semibold text-gray-800">Total</h1>
         <span className="text-lg font-semibold text-gray-800">
-          $
+          €
           {uniqueItems
             .reduce(
               (acc, product) => acc + (product.price || 0) * product.quantity,
@@ -115,7 +115,10 @@ const ShoppingCard = () => {
             .toFixed(2)}
         </span>
         {uniqueItems.length > 0 && (
-          <Button className="px-4 py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600">
+          <Button
+            onClick={() => navigate("/create-order")}
+            className="px-4 py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600"
+          >
             Checkout
           </Button>
         )}

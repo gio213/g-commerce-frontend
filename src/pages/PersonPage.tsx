@@ -2,7 +2,7 @@ import { useAppContext } from "@/context/AppContext";
 import { UpdateUser } from "@/types";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import * as apiClient from "../../api-client";
+import * as apiClient from "../api/api-client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";

@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import * as apiClient from "../../api-client";
+import * as apiClient from "../api/api-client";
 import { useAppContext } from "@/context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";

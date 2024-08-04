@@ -1,4 +1,4 @@
-import { categoryType, CreateProductReviewFormData, LoginFormData, PaginatedProductParams, ProductDetailPageData, ProductReviewsPaginated, ProductsResponse, ProductType, RegisterFormData, UpdateUser, UserType } from "@/types";
+import { categoryType, CreateProductReviewFormData, LoginFormData, OrderData, OrderType, PaginatedProductParams, PaymentIntentData, ProductDetailPageData, ProductReviewsPaginated, ProductsResponse, ProductType, RegisterFormData, UpdateUser, UserType } from "@/types";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 import axios from 'axios';
 export const register = async (formData: RegisterFormData) => {
@@ -376,5 +376,49 @@ export const createReview = async ({ comment, productId, starRating }: CreatePro
 
     return response.json();
 };
+export const createPaymentIntent = async (): Promise<PaymentIntentData> => {
+
+    const response = await fetch(`${API_BASE_URL}/api/checkout/payment-intent`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred creating payment intent')
+    }
+
+    return response.json()
+}
+
+export const checkout = async (order: OrderType) => {
+    const response = await fetch(`${API_BASE_URL}/api/checkout`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(order)
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred during checkout')
+    }
+    return response.json(
+    )
+}
 
 
+export const getOrders = async (): Promise<OrderData[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/orders`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (!response.ok) {
+        throw new Error('An error occurred fetching orders')
+    }
+    return response.json()
+}

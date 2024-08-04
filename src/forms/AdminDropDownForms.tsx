@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import * as apiCLient from "../../api-client";
+import * as apiCLient from "../api/api-client";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { categoryType } from "@/types";

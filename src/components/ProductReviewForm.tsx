@@ -16,7 +16,7 @@ import { useState } from "react";
 import { Textarea } from "./ui/textarea";
 import { useAppContext } from "@/context/AppContext";
 import { useMutation } from "react-query";
-import * as apiClient from "../../api-client";
+import * as apiClient from "../api/api-client";
 import { CreateProductReviewFormData } from "@/types";
 import Loading from "./Loading";
 import { Link } from "react-router-dom";

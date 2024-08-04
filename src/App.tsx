@@ -17,6 +17,8 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import ShoppingCard from "./pages/ShoppingCard";
 import PersonPage from "./pages/PersonPage";
 import WishListPage from "./pages/WishListPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import ManageOrders from "./pages/ManageOrders";
 
 function App() {
   const { isLoggedin, user } = useAppContext();
@@ -108,6 +110,22 @@ function App() {
               element={
                 <Layout>
                   <WishListPage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/create-order"
+              element={
+                <Layout>
+                  <CheckoutPage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/manage-orders"
+              element={
+                <Layout>
+                  <ManageOrders />
                 </Layout>
               }
             />

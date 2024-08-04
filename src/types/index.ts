@@ -144,3 +144,50 @@ export type Reviews = {
     reviewId?: string;
 }
 
+export type PaymentIntentResponse = {
+    paymetnItentId: string;
+    clientSecret: string;
+    totalCost: number;
+}
+
+
+export type OrderType = {
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    postalCode: string;
+    country: string;
+    email: string;
+    paymentIntentId: string;
+    clientSecret: string;
+}
+
+
+export type PaymentIntentData = {
+    clientSecret: string;
+    paymentIntentId: string;
+    totalCost: number;
+}
+
+
+export type OrderData = {
+    _id: string
+    userId: string
+    products: ProductType[]
+    totalPrice: number;
+    isPaid: boolean;
+    paidAt: Date;
+    isDelivered: boolean;
+    deliveredAt: Date;
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    postalCode: string;
+    country: string;
+    email: string;
+    createdAt: Date;
+    updatedAt: Date;
+    __v: number;
+}
