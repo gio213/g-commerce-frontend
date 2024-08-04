@@ -10,6 +10,11 @@ import { motion } from "framer-motion";
 const WishListPage = () => {
   const { wishListItems, addCartItem, removeCartItem } = useAppContext();
 
+  console.log(
+    "wishListItems",
+    wishListItems.map((item) => item._id)
+  );
+
   if (wishListItems.length === 0) {
     return <EmptyBasketAndWishList title="WishList" />;
   }
@@ -75,7 +80,7 @@ const WishListPage = () => {
               removeType="wishList"
               className="px-4 py-2 text-white transition-colors bg-red-500 rounded-md hover:bg-red-600"
               onRemove={() => {
-                removeCartItem(item.docId!);
+                removeCartItem(item._id!);
               }}
             />
           </div>

@@ -2,12 +2,16 @@ import { OrderData } from "@/types";
 import { motion } from "framer-motion";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import EmptyBasketAndWishList from "./EmptyBasketAndWishList";
 
 type OrdersComponentProps = {
   orders: OrderData[] | undefined;
 };
 
 const OrdersComponent = ({ orders }: OrdersComponentProps) => {
+  if (!orders) {
+    return <EmptyBasketAndWishList title="Orders" />;
+  }
   return (
     <div className="p-6 bg-gray-100 shadow-md rounded-xl">
       {orders?.map((order, orderIndex) => (

@@ -312,24 +312,29 @@ export const getWishlistItems = async (): Promise<ProductType[]> => {
 }
 
 
-export const deleteCartItem = async (cartItemId: string) => {
-    const response = await fetch(`${API_BASE_URL}/api/cart/remove/${cartItemId}`, {
+export const deleteCartItem = async (productId: string) => {
+    const response = await fetch(`${API_BASE_URL}/api/cart/remove/cart-item`, {
         method: 'DELETE',
         credentials: 'include',
-
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId })
     });
     if (!response.ok) {
-        throw new Error('An error occurred deleting cart item')
+        throw new Error('An error occurred deleting cart item');
     }
-    return response.json()
+    return response.json();
 }
 
 export const deleteWishList = async (wishListItemId: string) => {
-    const response = await fetch(`${API_BASE_URL}/api/wishlist/remove/${wishListItemId}`, {
+    const response = await fetch(`${API_BASE_URL}/api/remove/wishlist/wishlist-item`, {
         method: 'DELETE',
         credentials: 'include',
+        body: JSON.stringify({ wishListItemId }),
 
     });
+
     if (!response.ok) {
         throw new Error('An error occurred deleting cart item')
     }

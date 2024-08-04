@@ -105,15 +105,13 @@ export const AppContextProvider = ({
   };
 
   const removeCartItem = (productId: string) => {
-    const updatedCartItems = cartItems.filter(
-      (item) => item.docId !== productId
-    );
+    const updatedCartItems = cartItems.filter((item) => item._id !== productId);
     setCartItems(updatedCartItems);
   };
 
   const removeWishListItem = (productId: string) => {
     const updatedWishListItems = wishListItems.filter(
-      (item) => item.docId !== productId
+      (item) => item._id !== productId
     );
     setWishListItems(updatedWishListItems);
   };
