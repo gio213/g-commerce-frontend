@@ -422,3 +422,17 @@ export const getOrders = async (): Promise<OrderData[]> => {
     }
     return response.json()
 }
+
+export const getProductsByCategory = async (categoryId: string): Promise<ProductType[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/category/search/${categoryId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred fetching products');
+    }
+    return response.json();
+
+}

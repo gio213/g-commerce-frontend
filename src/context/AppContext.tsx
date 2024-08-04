@@ -34,7 +34,6 @@ type AppContextType = {
   categories: categoryType[];
   cartItems: ProductType[];
   addCartItem: (item: ProductType) => void;
-
   wishListItems: ProductType[];
   addWishListItem: (wishListItem: ProductType) => void;
   clearItems: () => void;

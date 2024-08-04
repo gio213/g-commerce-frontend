@@ -19,6 +19,7 @@ import PersonPage from "./pages/PersonPage";
 import WishListPage from "./pages/WishListPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ManageOrders from "./pages/ManageOrders";
+import SearchByCategoryPage from "./pages/SearchByCategoryPage";
 
 function App() {
   const { isLoggedin, user } = useAppContext();
@@ -54,6 +55,14 @@ function App() {
           element={
             <Layout>
               <ProductDetailPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/search/category/:categoryId"
+          element={
+            <Layout>
+              <SearchByCategoryPage />
             </Layout>
           }
         />
