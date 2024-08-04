@@ -30,7 +30,6 @@ const Home = () => {
   useEffect(() => {
     if (data) {
       setTotalPages(data.totalPages);
-      console.log("data", data);
     }
   }, [data]);
 

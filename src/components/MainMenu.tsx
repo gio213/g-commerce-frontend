@@ -11,9 +11,6 @@ const MainMenu = () => {
 
   const navigate = useNavigate();
 
-  //console.log("cartItems", cartItems);
-  //console.log("wishListItems", wishListItems);
-
   return (
     <span className="items-center hidden space-x-2 md:flex">
       {isLoggedin ? (

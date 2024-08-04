@@ -72,7 +72,6 @@ const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
       reviewId: createReviewId(), // Include reviewId here
       previewAded: addPreview(),
     };
-    console.log("reviewData", reviewData);
 
     const reviewDataForState = {
       ...reviewData,

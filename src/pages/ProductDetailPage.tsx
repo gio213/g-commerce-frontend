@@ -20,12 +20,6 @@ const ProductDetailPage = () => {
     }
   }, [productId, setProductId]);
 
-  useEffect(() => {
-    if (reviews) {
-      console.log("reviews", reviews);
-    }
-  }, [reviews]);
-
   const { data, isLoading, error } = useQuery<ProductDetailPageData, Error>(
     ["product", productId],
     () => apiClient.getProductById(productId as string),
