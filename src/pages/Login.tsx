@@ -6,6 +6,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { LoginFormData } from "@/types/index.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { motion } from "framer-motion";
+import { Input } from "@/components/ui/input.tsx";
 
 const Login = () => {
   const { showToast } = useAppContext();
@@ -54,7 +55,7 @@ const Login = () => {
         </p>
         <div className="mb-4">
           <label className="block mb-2 text-gray-700">Email</label>
-          <input
+          <Input
             type="email"
             placeholder="Enter your email"
             className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
@@ -68,7 +69,7 @@ const Login = () => {
         </div>
         <div className="mb-4">
           <label className="block mb-2 text-gray-700">Password</label>
-          <input
+          <Input
             type="password"
             placeholder="Enter your password"
             className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${

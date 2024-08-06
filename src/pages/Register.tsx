@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { RegisterFormData } from "@/types/index.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { motion } from "framer-motion";
+import { Input } from "@/components/ui/input.tsx";
 
 const Register = () => {
   const { showToast } = useAppContext();
@@ -54,7 +55,7 @@ const Register = () => {
         </p>
         <div className="mb-4">
           <label className="block mb-2 text-gray-700">First Name</label>
-          <input
+          <Input
             type="text"
             placeholder="Enter your first name"
             className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
@@ -70,7 +71,7 @@ const Register = () => {
         </div>
         <div className="mb-4">
           <label className="block mb-2 text-gray-700">Last Name</label>
-          <input
+          <Input
             type="text"
             placeholder="Enter your last name"
             className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
@@ -86,7 +87,7 @@ const Register = () => {
         </div>
         <div className="mb-4">
           <label className="block mb-2 text-gray-700">Email</label>
-          <input
+          <Input
             type="email"
             placeholder="Enter your email"
             className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
@@ -100,7 +101,7 @@ const Register = () => {
         </div>
         <div className="mb-4">
           <label className="block mb-2 text-gray-700">Password</label>
-          <input
+          <Input
             type="password"
             placeholder="Enter your password"
             className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
@@ -122,7 +123,7 @@ const Register = () => {
         </div>
         <div className="mb-4">
           <label className="block mb-2 text-gray-700">Confirm Password</label>
-          <input
+          <Input
             type="password"
             placeholder="Confirm your password"
             className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
