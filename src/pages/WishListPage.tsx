@@ -8,12 +8,8 @@ import EmptyBasketAndWishList from "@/components/EmptyBasketAndWishList";
 import { motion } from "framer-motion";
 
 const WishListPage = () => {
-  const { wishListItems, addCartItem, removeCartItem } = useAppContext();
-
-  console.log(
-    "wishListItems",
-    wishListItems.map((item) => item._id)
-  );
+  const { wishListItems, addCartItem, removeWishListItem, cleartWishList } =
+    useAppContext();
 
   if (wishListItems.length === 0) {
     return <EmptyBasketAndWishList title="WishList" />;
@@ -31,6 +27,9 @@ const WishListPage = () => {
           <ClearButton
             clearType="wishList"
             className="px-4 py-2 text-white transition-colors bg-red-500 rounded-md hover:bg-red-600"
+            onClear={() => {
+              cleartWishList();
+            }}
           />
         </div>
       )}
@@ -76,11 +75,12 @@ const WishListPage = () => {
               }}
             />
             <RemoveItem
-              id={item.docId!}
+              id={item._id!}
               removeType="wishList"
               className="px-4 py-2 text-white transition-colors bg-red-500 rounded-md hover:bg-red-600"
               onRemove={() => {
-                removeCartItem(item._id!);
+                removeWishListItem(item?._id);
+                console.log(item._id);
               }}
             />
           </div>

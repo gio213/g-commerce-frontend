@@ -17,7 +17,8 @@ const RemoveItem = ({
   onRemove,
 }: RemoveItemProps) => {
   const { showToast } = useAppContext();
-  const { mutate: removeCartItem, isLoading: isRmoveIngFromCart } = useMutation(
+
+  const { mutate: removeCartItem, isLoading: isRemovingFromCart } = useMutation(
     apiClient.deleteCartItem,
     {
       onSuccess: async () => {
@@ -29,7 +30,7 @@ const RemoveItem = ({
     }
   );
 
-  const { mutate: removeWishListItem, isLoading: isRemoveIngFromWishList } =
+  const { mutate: removeWishListItem, isLoading: isRemovingFromWishList } =
     useMutation(apiClient.deleteWishList, {
       onSuccess: async () => {
         showToast({ message: "Item removed from wishlist", type: "success" });
@@ -39,7 +40,7 @@ const RemoveItem = ({
       },
     });
 
-  const handleRemove = (id: string) => {
+  const handleRemove = () => {
     if (removeType === "cart") {
       removeCartItem(id);
     } else {
@@ -53,10 +54,10 @@ const RemoveItem = ({
       size="sm"
       variant="destructive"
       onClick={() => {
-        handleRemove(id);
+        handleRemove();
         onRemove && onRemove();
       }}
-      disabled={isRmoveIngFromCart || isRemoveIngFromWishList}
+      disabled={isRemovingFromCart || isRemovingFromWishList}
     >
       Remove
     </Button>

@@ -100,6 +100,7 @@ const AdminProductCard = ({ product }: AdminProductCard) => {
         </div>
         <div className="flex gap-1">
           <DeleteConfirmationDialog
+            tobBeDeleted="product"
             buttonText="Delete"
             onConfirm={() => deleteProduct(product._id)}
           />

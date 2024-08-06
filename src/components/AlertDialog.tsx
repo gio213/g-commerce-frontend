@@ -12,14 +12,16 @@ import {
 import { Button } from "./ui/button";
 
 interface DeleteConfirmationDialogProps {
-  onConfirm: () => void;
+  onConfirm?: () => void;
   onClick?: () => void;
   buttonText?: string;
+  tobBeDeleted?: string;
 }
 
 const DeleteConfirmationDialog: React.FC<DeleteConfirmationDialogProps> = ({
   onConfirm,
   buttonText,
+  tobBeDeleted,
 }) => (
   <AlertDialog>
     <AlertDialogTrigger>
@@ -48,9 +50,9 @@ const DeleteConfirmationDialog: React.FC<DeleteConfirmationDialogProps> = ({
         </AlertDialogTitle>
         <AlertDialogDescription>
           {buttonText === "Delete"
-            ? "Are you sure you want to delete this product?"
+            ? `Are you sure you want to delete this ${tobBeDeleted}?`
             : buttonText === "Update"
-              ? "Are you sure you want to update this product?"
+              ? `Are you sure you want to update this ${tobBeDeleted}?`
               : ""}
         </AlertDialogDescription>
       </AlertDialogHeader>

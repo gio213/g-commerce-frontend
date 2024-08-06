@@ -37,11 +37,13 @@ type AppContextType = {
   wishListItems: ProductType[];
   addWishListItem: (wishListItem: ProductType) => void;
   clearItems: () => void;
+  cleartWishList: () => void;
   removeCartItem: (productId: string) => void;
   removeWishListItem: (productId: string) => void;
   review: ReviewType;
   reviews: ProductReviewType[];
   addReview: (review: ProductReviewType) => void;
+  removeReview: (reviewId: string) => void;
   productId: string;
   setProductId: (productId: string) => void;
   currentPage: number;
@@ -96,12 +98,21 @@ export const AppContextProvider = ({
 
   const clearItems = () => {
     setCartItems([]);
-    setWishListItems([]);
     clearCartFromDb();
+  };
+
+  const cleartWishList = () => {
+    setWishListItems([]);
+    clearWishListFromDb();
   };
 
   const addReview = (review: ProductReviewType) => {
     setReviews([review, ...reviews]);
+  };
+
+  const removeReview = (reviewId: string) => {
+    const updatedReviews = reviews.filter((review) => review._id !== reviewId);
+    setReviews(updatedReviews);
   };
 
   const removeCartItem = (productId: string) => {
@@ -128,10 +139,11 @@ export const AppContextProvider = ({
     }
   );
 
-  const { mutate: clearCartFromDb } = useMutation(apiClient.clearCart, {});
+  const { mutate: clearCartFromDb } = useMutation(apiClient.clearCart);
+  const { mutate: clearWishListFromDb } = useMutation(apiClient.clearWishlist);
 
   useQuery("cart", apiClient.getCartItems, {
-    enabled: !isError,
+    enabled: !!user?._id,
     onSuccess: (data) => {
       setCartItems(data);
     },
@@ -143,7 +155,7 @@ export const AppContextProvider = ({
   });
 
   useQuery("wishList", apiClient.getWishlistItems, {
-    enabled: !isError,
+    enabled: !!user?._id,
     onSuccess: (data) => {
       setWishListItems(data);
     },
@@ -177,6 +189,7 @@ export const AppContextProvider = ({
         wishListItems,
         addWishListItem,
         clearItems,
+        cleartWishList,
         removeCartItem,
         removeWishListItem,
         review: {
@@ -187,6 +200,7 @@ export const AppContextProvider = ({
         },
         reviews,
         addReview,
+        removeReview,
         productId,
         setProductId,
         currentPage,

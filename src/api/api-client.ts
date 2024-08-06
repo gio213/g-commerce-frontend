@@ -303,11 +303,16 @@ export const getWishlistItems = async (): Promise<ProductType[]> => {
         headers: {
             'Content-Type': 'application/json'
         }
-
     });
+
     if (!response.ok) {
+        if (response.status === 404) {
+            // If the status is 404, return an empty array
+            return [];
+        }
         throw new Error('An error occurred getting wishlist');
     }
+
     return response.json();
 }
 
@@ -327,11 +332,14 @@ export const deleteCartItem = async (productId: string) => {
     return response.json();
 }
 
-export const deleteWishList = async (wishListItemId: string) => {
-    const response = await fetch(`${API_BASE_URL}/api/remove/wishlist/wishlist-item`, {
+export const deleteWishList = async (productId: string) => {
+    const response = await fetch(`${API_BASE_URL}/api/wishlist/remove/wishlist-item`, {
         method: 'DELETE',
         credentials: 'include',
-        body: JSON.stringify({ wishListItemId }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId }),
 
     });
 
@@ -381,6 +389,22 @@ export const createReview = async ({ comment, productId, starRating }: CreatePro
 
     return response.json();
 };
+
+export const deleteReview = async (reviewId: string) => {
+    const response = await fetch(`${API_BASE_URL}/api/product/review/delete`, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ reviewId })
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred deleting review')
+    }
+    return response.json()
+}
+
 export const createPaymentIntent = async (): Promise<PaymentIntentData> => {
 
     const response = await fetch(`${API_BASE_URL}/api/checkout/payment-intent`, {
@@ -440,4 +464,22 @@ export const getProductsByCategory = async (categoryId: string): Promise<Product
     }
     return response.json();
 
+}
+
+export const searchProducts = async (searchText: string): Promise<ProductType[]> => {
+    const queryParams = new URLSearchParams();
+    if (searchText) {
+        queryParams.set('searchText', searchText);
+    }
+    const response = await fetch(`${API_BASE_URL}/api/product/search?${queryParams.toString()}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!response.ok) {
+        throw new Error('An error occurred fetching products')
+    }
+
+    return response.json()
 }

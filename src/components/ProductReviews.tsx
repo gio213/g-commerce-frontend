@@ -2,8 +2,10 @@ import { timeAgo } from "@/helper/helper";
 import { Reviews } from "../types/index";
 import { useEffect, useRef, useState } from "react";
 import { useAppContext } from "@/context/AppContext";
-import { Button } from "./ui/button";
 import { motion } from "framer-motion";
+import DeleteConfirmationDialog from "./AlertDialog";
+import { useMutation } from "react-query";
+import * as apiClient from "../api/api-client";
 
 type ProductReviewsProps = {
   reviews: Reviews[];
@@ -13,7 +15,7 @@ const ProductReviews = ({ reviews }: ProductReviewsProps) => {
   const reviewRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [lastReviewIndex, setLastReviewIndex] = useState<number | null>(null);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
-  const { previewAdded, user } = useAppContext();
+  const { previewAdded, user, showToast, removeReview } = useAppContext();
 
   useEffect(() => {
     if (reviews.length > 0 && previewAdded) {
@@ -31,6 +33,18 @@ const ProductReviews = ({ reviews }: ProductReviewsProps) => {
       setIsAnimating(false);
     }
   }, [previewAdded]);
+
+  const { mutate: deleteReview } = useMutation(
+    (reviewId: string) => apiClient.deleteReview(reviewId),
+    {
+      onSuccess: () => {
+        showToast({ message: "Review deleted successfully", type: "success" });
+      },
+      onError: () => {
+        showToast({ message: "Failed to delete review", type: "error" });
+      },
+    }
+  );
 
   return (
     <motion.div
@@ -64,7 +78,14 @@ const ProductReviews = ({ reviews }: ProductReviewsProps) => {
           >
             {review.userId === user?._id && (
               <div className="flex justify-end w-full">
-                <Button variant={"destructive"}>Delete</Button>
+                <DeleteConfirmationDialog
+                  buttonText="Delete"
+                  tobBeDeleted="review"
+                  onConfirm={() => {
+                    deleteReview(review._id!);
+                    removeReview(review._id!);
+                  }}
+                />
               </div>
             )}
             <span className="flex justify-end w-full">
