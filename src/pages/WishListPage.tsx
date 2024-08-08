@@ -72,6 +72,7 @@ const WishListPage = () => {
               productId={item?._id}
               onAdd={() => {
                 addCartItem(item);
+                removeWishListItem(item?._id);
               }}
             />
             <RemoveItem

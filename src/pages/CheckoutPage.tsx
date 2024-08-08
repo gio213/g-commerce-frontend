@@ -23,7 +23,7 @@ const CheckoutPage = () => {
       onSuccess: () => {
         clearItems();
         showToast({ message: "Order placed successfully", type: "success" });
-        navigate("/");
+        navigate("/manage-orders");
       },
       onError: (error) => {
         console.error("Error placing order:", error);

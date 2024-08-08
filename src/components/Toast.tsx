@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 
 type ToastProps = {
   message: string;
@@ -10,27 +9,34 @@ type ToastProps = {
 
 const Toast = ({ message, type, onClose }: ToastProps) => {
   useEffect(() => {
-    let toastId: React.ReactText | null = null;
+    let timer: NodeJS.Timeout;
 
     if (type === "success") {
-      toastId = toast.success(message, { autoClose: 5000 });
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: message,
+        timer: 5000,
+        showConfirmButton: true,
+        willClose: onClose,
+      });
     } else if (type === "error") {
-      toastId = toast.error(message, { autoClose: 5000 });
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: message,
+        timer: 5000,
+        showConfirmButton: true,
+        willClose: onClose,
+      });
     }
 
-    const timer = setTimeout(() => {
-      onClose();
-    }, 5000);
-
     return () => {
-      if (toastId !== null) {
-        toast.dismiss(toastId);
-      }
       clearTimeout(timer);
     };
   }, [message, type, onClose]);
 
-  return <ToastContainer position="bottom-right" />;
+  return null;
 };
 
 export default Toast;
