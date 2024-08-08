@@ -72,7 +72,6 @@ const WishListPage = () => {
               productId={item?._id}
               onAdd={() => {
                 addCartItem(item);
-                removeWishListItem(item?._id);
               }}
             />
             <RemoveItem
@@ -81,7 +80,6 @@ const WishListPage = () => {
               className="px-4 py-2 text-white transition-colors bg-red-500 rounded-md hover:bg-red-600"
               onRemove={() => {
                 removeWishListItem(item?._id);
-                console.log(item._id);
               }}
             />
           </div>

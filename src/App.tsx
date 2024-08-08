@@ -34,22 +34,27 @@ function App() {
             </Layout>
           }
         />
-        <Route
-          path="/register"
-          element={
-            <Layout>
-              <Register />
-            </Layout>
-          }
-        />
-        <Route
-          path="/sign-in"
-          element={
-            <Layout>
-              <Login />
-            </Layout>
-          }
-        />
+
+        {!isLoggedin && (
+          <>
+            <Route
+              path="/sign-in"
+              element={
+                <Layout>
+                  <Login />
+                </Layout>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <Layout>
+                  <Register />
+                </Layout>
+              }
+            />
+          </>
+        )}
         <Route
           path="/product/detail/:productId"
           element={
