@@ -20,6 +20,7 @@ import WishListPage from "./pages/WishListPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ManageOrders from "./pages/ManageOrders";
 import SearchByCategoryPage from "./pages/SearchByCategoryPage";
+import Orders from "../src/pages/admin/Orders";
 
 function App() {
   const { isLoggedin, user } = useAppContext();
@@ -81,6 +82,15 @@ function App() {
                 </AdminLayout>
               }
             />
+            <Route
+              path="/admin-dashboard/orders"
+              element={
+                <AdminLayout>
+                  <Orders />
+                </AdminLayout>
+              }
+            />
+
             <Route
               path="/admin-dashboard/add-product"
               element={

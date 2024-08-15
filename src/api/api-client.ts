@@ -450,6 +450,21 @@ export const getOrders = async (): Promise<OrderData[]> => {
         throw new Error('An error occurred fetching orders')
     }
     return response.json()
+
+}
+
+export const getAllOrders = async (): Promise<OrderData[]> => {
+    const response = await fetch(`${API_BASE_URL}/api/all/orders`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (!response.ok) {
+        throw new Error('An error occurred fetching orders')
+    }
+    return response.json()
 }
 
 export const getProductsByCategory = async (categoryId: string): Promise<ProductType[]> => {

@@ -1,5 +1,4 @@
 import AdminHeader from "../AdminHeader";
-import LeftSideBar from "./LeftSideBar";
 
 type AdminLayoutProps = {
   children: React.ReactNode;
@@ -7,11 +6,10 @@ type AdminLayoutProps = {
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col h-screen">
       <AdminHeader />
       <div className="flex flex-1">
-        <LeftSideBar />
-        <div className="container flex-1 py-10 mx-auto ">{children}</div>
+        <div className="flex-1 p-4 bg-gray-100">{children}</div>
       </div>
     </div>
   );
