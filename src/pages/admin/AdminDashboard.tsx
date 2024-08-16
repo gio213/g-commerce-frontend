@@ -13,19 +13,12 @@ const AdminDashboard = () => {
     error,
   } = useQuery("all-orders", apiClient.getAllOrders);
 
-  console.log("revenue", revenue);
-  console.log("isLoading", isLoading);
-  console.log("error", error);
-
   const orders = revenue?.map((order) => {
-    console.log("order", order);
     return {
       ...order,
       createdAt: new Date(order.createdAt).toISOString(),
     };
   });
-
-  console.log("orders", orders);
 
   if (isLoading) return <Loading />;
   if (error) return <div>Error loading orders</div>;
