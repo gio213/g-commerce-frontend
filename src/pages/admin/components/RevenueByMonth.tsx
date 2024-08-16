@@ -88,7 +88,7 @@ const RevenueByMonth: React.FC<RevenueByMonthProps> = ({ orders }) => {
   };
 
   return (
-    <div className="w-1/2 p-4 bg-white rounded-lg shadow-lg ">
+    <div className="w-full p-4 bg-white rounded-lg shadow-lg md:w-1/2 ">
       <h2 className="mb-4 text-2xl font-bold">Revenue by Month </h2>
       <Bar data={chartData} options={options} />
     </div>

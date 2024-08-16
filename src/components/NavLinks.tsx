@@ -25,8 +25,8 @@ const NavLinks = () => {
     <NavigationMenu>
       <NavigationMenuList className="bg-white rounded-lg shadow-md">
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="px-4 py-2 text-lg font-semibold text-gray-700 rounded-t-lg hover:bg-gray-100">
-            Search By Category
+          <NavigationMenuTrigger className="text-sm font-semibold text-gray-700 rounded-t-lg w-fit hover:bg-gray-100">
+            Categories
           </NavigationMenuTrigger>
           <NavigationMenuContent className="w-full rounded-b-lg bg-gray-50">
             {categories.map((category) => (

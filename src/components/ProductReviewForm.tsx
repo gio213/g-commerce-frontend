@@ -136,7 +136,7 @@ const ProductReviewForm = ({ productId }: ProductReviewFormProps) => {
               </AlertDialogCancel>
               <AlertDialogAction
                 disabled={
-                  isLoading || !textValue || textValue.length <= 10 || !rating
+                  isLoading || !textValue || textValue.length <= 2 || !rating
                 }
                 onClick={handleSubmit(onSubmit)}
               >

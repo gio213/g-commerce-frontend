@@ -5,6 +5,7 @@ import {
   SheetDescription,
   SheetTitle,
   SheetTrigger,
+  SheetClose,
 } from "./ui/sheet";
 import { Separator } from "@radix-ui/react-separator";
 import { Menu } from "lucide-react";
@@ -47,7 +48,9 @@ const MobileNav = () => {
               <Separator />
               <SheetDescription className="flex">
                 <Button className="flex-1 font-bold bg-orange-500">
-                  <Link to="/sign-in">Log In</Link>
+                  <SheetClose asChild>
+                    <Link to="/sign-in">Log In</Link>
+                  </SheetClose>
                 </Button>
               </SheetDescription>
             </div>
